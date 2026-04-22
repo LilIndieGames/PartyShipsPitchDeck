@@ -1214,6 +1214,34 @@
             /* Remove 16:9 lock — slides grow as tall as needed */
             .slide {
                 aspect-ratio: unset;
+                padding: 90px 80px 160px;
+            }
+
+            /* Video slide has no flowing content — give it a tall portrait
+               frame so the gameplay video fills the screen instead of
+               collapsing to near-zero height. */
+            .slide.video-slide {
+                aspect-ratio: 16 / 9;
+                padding: 0;
+            }
+
+            .case-file {
+                padding: 60px 55px 70px;
+            }
+
+            .corner-logo {
+                top: 50px;
+                left: 55px;
+            }
+
+            .corner-logo img {
+                height: 80px;
+            }
+
+            /* Push file-number well clear of the slide content */
+            .file-number {
+                bottom: 60px;
+                right: 70px;
             }
 
             /* ── Text scale-up (small text becomes readable) ── */
@@ -1365,19 +1393,41 @@
             .team-bio    { font-size: 52px; line-height: 1.6; }
             .company-bio p { font-size: 56px !important; }
 
-            /* ── Roadmap slide ── */
+            /* ── Roadmap: fully vertical — dots on left, text on right ── */
             .roadmap-row {
-                flex-wrap: wrap;
-                justify-content: flex-start;
-                gap: 60px 20px;
+                display: block;
+                padding: 20px 0;
+            }
+
+            /* Rotate the connecting line from horizontal to vertical */
+            .roadmap-row::before {
+                top: 90px;
+                bottom: 90px;
+                left: 80px;
+                right: auto;
+                width: 2px;
+                height: auto;
+                background: repeating-linear-gradient(
+                    to bottom,
+                    rgba(255, 255, 255, 0.18) 0 8px,
+                    transparent 8px 16px
+                );
             }
 
             .roadmap-stage {
-                flex: 0 0 46%;
-                min-width: 0;
+                display: grid;
+                grid-template-columns: 160px 1fr;
+                column-gap: 60px;
+                padding: 36px 0;
+                text-align: left;
+                flex: none;
             }
 
             .roadmap-ring {
+                grid-row: 1 / 4;
+                grid-column: 1;
+                margin: 0 !important;
+                align-self: start;
                 width: 160px;
                 height: 160px;
             }
@@ -1387,9 +1437,11 @@
                 height: 70px;
             }
 
-            .roadmap-date  { font-size: 40px; }
-            .roadmap-title { font-size: 56px; }
-            .roadmap-notes { font-size: 40px; }
+            .roadmap-date  { grid-column: 2; grid-row: 1; font-size: 40px; margin-bottom: 10px; }
+            .roadmap-title { grid-column: 2; grid-row: 2; font-size: 64px; margin-bottom: 16px; }
+            .roadmap-notes { grid-column: 2; grid-row: 3; font-size: 44px; }
+            .roadmap-notes li { margin-bottom: 10px; padding-left: 22px; }
+            .roadmap-notes li::before { top: 14px; width: 8px; height: 8px; }
 
             /* ── Timeline ── */
             .timeline {
@@ -1408,20 +1460,39 @@
                 padding: 28px 56px;
             }
 
-            /* ── Grant slide ── */
+            /* ── Grant slide: logo + status row up top, then name/desc ── */
             .grant-intro      { font-size: 60px; }
 
             .grant-card {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: stretch;
                 gap: 24px;
+                padding: 40px 44px;
+            }
+
+            .grant-card-left  { order: 2; }
+
+            .grant-card-right {
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                width: 100%;
+                order: 1;
+                padding-bottom: 30px;
+                border-bottom: 1px solid var(--light-gray);
+                text-align: left;
+                gap: 20px !important;
+            }
+
+            .grant-card-right img {
+                height: 120px !important;
+                max-width: 55%;
             }
 
             .grant-card-name  { font-size: 80px; }
             .grant-card-desc  { font-size: 52px; }
-            .grant-amount     { font-size: 100px; }
+            .grant-amount     { font-size: 96px; }
             .grant-status     { font-size: 40px; }
-            .grant-card-right { text-align: left; }
 
             /* ── Floating character (slide 10) ── */
             .floating-character-wrapper {
@@ -1431,6 +1502,63 @@
             /* ── Table ── */
             .punk-table th { font-size: 56px; padding: 24px; }
             .punk-table td { font-size: 48px; padding: 20px 24px; }
+
+            /* ── Slide 10 (Thank You): widen the 620px inner wrapper ── */
+            .case-file > div[style*="max-width: 620px"] {
+                max-width: 100% !important;
+            }
+            .case-file p[style*="max-width: 520px"] {
+                max-width: 100% !important;
+            }
+
+            .thankyou-big {
+                font-size: 280px !important;
+                margin-bottom: 40px !important;
+            }
+
+            /* Tagline "Built for couches. Crafted for chaos." */
+            .case-file p[style*="font-size: 34px"] {
+                font-size: 92px !important;
+                margin-bottom: 30px !important;
+            }
+
+            /* CTA buttons */
+            .play-build-cta {
+                font-size: 64px !important;
+                padding: 28px 56px !important;
+                letter-spacing: 0.12em !important;
+            }
+
+            /* Contact labels (CO-FOUNDER / DEV) */
+            .case-file div[style*="font-size: 10px"] {
+                font-size: 40px !important;
+                margin-bottom: 14px !important;
+            }
+
+            /* Contact names (RAYNER BRANDON) */
+            .case-file div[style*="font-size: 22px"] {
+                font-size: 76px !important;
+            }
+
+            /* Footer paragraphs on slide 10 */
+            .case-file p[style*="font-size: 13px"] {
+                font-size: 52px !important;
+            }
+            .case-file p[style*="font-size: 11px"] {
+                font-size: 42px !important;
+            }
+
+            /* Slide 08 roadmap intro block — stack vertically */
+            .case-file > div[style*="max-width: 1100px"] {
+                flex-direction: column !important;
+                gap: 28px !important;
+            }
+            .case-file > div[style*="max-width: 1100px"] p {
+                text-align: left !important;
+            }
+            .case-file > div[style*="max-width: 1100px"] > div[style*="width: 1px"] {
+                display: none;
+            }
         }
 
         @media print {
