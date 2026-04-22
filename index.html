@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Party Ships - Pitch Deck</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +40,7 @@
             background: #050505;
             color: var(--white);
             padding: 40px 0;
+            overflow-x: hidden;
         }
 
         .desktop-only-notice {
@@ -1911,19 +1913,35 @@
 (function() {
     function scalePresentation() {
         var w = window.innerWidth;
-        var scale = 1;
-        if (w <= 800)        scale = 0.30;
-        else if (w <= 1150)  scale = 0.44;
-        else if (w <= 1550)  scale = 0.62;
-        else if (w <= 2000)  scale = 0.82;
+        var scale;
+
+        if (w < 1600)        scale = w / 1600;
+        else if (w <= 2200)  scale = 1;
+        else if (w <= 2800)  scale = 1.15;
+        else if (w <= 3400)  scale = 1.40;
+        else                 scale = 1.60;
+
+        // Reset
         document.body.style.transform = '';
+        document.body.style.zoom = '';
         document.body.style.width = '';
+        document.body.style.transformOrigin = '';
         document.documentElement.style.height = '';
-        if (scale < 1) {
+
+        if (Math.abs(scale - 1) < 0.001) return;
+
+        if (w < 1600) {
+            // Mobile: use zoom instead of transform. transform:scale() forces Safari to
+            // rasterize the full 1600px-wide document as a GPU texture before scaling,
+            // exhausting memory and crashing the tab. zoom rasterises at screen resolution.
+            document.body.style.width = '1600px';
+            document.body.style.zoom = scale;
+        } else {
+            // Desktop scale-up: transform maintains centering via the vw width trick
+            document.body.style.width = (100 / scale) + 'vw';
             var naturalH = document.body.scrollHeight;
             document.body.style.transformOrigin = '0 0';
             document.body.style.transform = 'scale(' + scale + ')';
-            document.body.style.width = (100 / scale) + 'vw';
             document.documentElement.style.height = (naturalH * scale) + 'px';
         }
     }
