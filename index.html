@@ -1203,6 +1203,236 @@
             display: none;
         }
 
+        /* ============================================= */
+        /* MOBILE  (phones ≤ 750px viewport)            */
+        /* Body renders at 1600px then zooms to screen. */
+        /* Multiply desired on-screen px by ~4 to get   */
+        /* the correct pre-zoom value used below.        */
+        /* ============================================= */
+        @media (max-width: 750px) {
+
+            /* Remove 16:9 lock — slides grow as tall as needed */
+            .slide {
+                aspect-ratio: unset;
+            }
+
+            /* ── Text scale-up (small text becomes readable) ── */
+            p {
+                font-size: 60px !important;
+                line-height: 1.65;
+                margin-bottom: 36px;
+            }
+
+            h2 {
+                font-size: 108px;
+                margin-bottom: 40px;
+            }
+
+            h3 {
+                font-size: 68px;
+                margin-bottom: 32px;
+            }
+
+            .label {
+                font-size: 44px;
+                margin-bottom: 20px;
+            }
+
+            .stat-number {
+                font-size: 180px;
+            }
+
+            .stat-label {
+                font-size: 44px;
+                margin-top: 10px;
+            }
+
+            .stat-row {
+                gap: 80px;
+                flex-wrap: wrap;
+                margin: 40px 0;
+            }
+
+            .feature-list li {
+                font-size: 56px;
+                padding: 20px 0 20px 52px;
+            }
+
+            .quote {
+                font-size: 64px;
+                line-height: 1.5;
+                margin: 44px 0;
+            }
+
+            .folder-tab {
+                font-size: 44px;
+                padding: 14px 36px 12px;
+            }
+
+            .folder-case-num {
+                font-size: 40px;
+            }
+
+            .file-number {
+                font-size: 40px;
+            }
+
+            /* ── Layout: stack all multi-column grids ── */
+            .two-col {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .pillar-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .pillar-box h4 {
+                font-size: 72px;
+            }
+
+            /* ── Capsule media ── */
+            .capsule-medium img,
+            .capsule-medium video {
+                width: 100%;
+                height: auto;
+            }
+
+            /* ── Modules/item slide ── */
+            .item-inner {
+                width: 180px;
+                height: 180px;
+                flex-shrink: 0;
+            }
+
+            .item-slot-name {
+                font-size: 56px;
+            }
+
+            .item-slot-desc {
+                font-size: 44px;
+            }
+
+            .combo-title {
+                font-size: 64px;
+            }
+
+            .combo-desc {
+                font-size: 48px;
+            }
+
+            /* ── Market slide ── */
+            .market-grid {
+                grid-template-columns: 1fr;
+                gap: 44px;
+            }
+
+            .market-card {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .market-card-img {
+                width: 100%;
+                height: auto;
+            }
+
+            .market-card-stats td {
+                font-size: 46px;
+                padding: 8px 0;
+            }
+
+            /* ── Team slide ── */
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-card {
+                flex-direction: column;
+            }
+
+            /* Override the inline-style width on team portrait imgs */
+            .team-card > img {
+                width: 100% !important;
+                min-height: 500px !important;
+                border-right: none !important;
+                border-bottom: 2px solid var(--pop);
+            }
+
+            .team-name   { font-size: 84px; }
+            .team-role   { font-size: 40px; }
+            .team-bio    { font-size: 52px; line-height: 1.6; }
+            .company-bio p { font-size: 56px !important; }
+
+            /* ── Roadmap slide ── */
+            .roadmap-row {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                gap: 60px 20px;
+            }
+
+            .roadmap-stage {
+                flex: 0 0 46%;
+                min-width: 0;
+            }
+
+            .roadmap-ring {
+                width: 160px;
+                height: 160px;
+            }
+
+            .roadmap-ring-inner {
+                width: 70px;
+                height: 70px;
+            }
+
+            .roadmap-date  { font-size: 40px; }
+            .roadmap-title { font-size: 56px; }
+            .roadmap-notes { font-size: 40px; }
+
+            /* ── Timeline ── */
+            .timeline {
+                flex-wrap: wrap;
+                gap: 40px;
+            }
+
+            .timeline-item  { flex: 0 0 30%; }
+            .timeline-label { font-size: 48px; }
+            .timeline-date  { font-size: 36px; }
+            .timeline-notes { font-size: 36px; }
+
+            /* ── Status badge ── */
+            .status-badge {
+                font-size: 44px;
+                padding: 28px 56px;
+            }
+
+            /* ── Grant slide ── */
+            .grant-intro      { font-size: 60px; }
+
+            .grant-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 24px;
+            }
+
+            .grant-card-name  { font-size: 80px; }
+            .grant-card-desc  { font-size: 52px; }
+            .grant-amount     { font-size: 100px; }
+            .grant-status     { font-size: 40px; }
+            .grant-card-right { text-align: left; }
+
+            /* ── Floating character (slide 10) ── */
+            .floating-character-wrapper {
+                display: none;
+            }
+
+            /* ── Table ── */
+            .punk-table th { font-size: 56px; padding: 24px; }
+            .punk-table td { font-size: 48px; padding: 20px 24px; }
+        }
+
         @media print {
             body { padding: 0; background: white; }
             .slide {
