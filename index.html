@@ -8,1134 +8,417 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Risque&display=swap" rel="stylesheet">
     <style>
+        /* =====================================================
+           PARTY SHIPS / PITCH DECK
+           Cream-paper zine. Framed hard-outlined boxes sitting on
+           warm paper, punchy layered display type, coral lead
+           accent with cyan / acid / magenta pops.
+           ===================================================== */
+
         :root {
-            --black: #0a0a0a;
-            --white: #f5f5f5;
-            --gray: #888;
-            --dark-gray: #1a1a1a;
-            --light-gray: #333;
-            --pop: #ff2d95;
-            --chaos: #5ce5c6;
+            --ink:    #211a12;   /* near-black warm ink */
+            --paper:  #efe4cf;   /* warm tan paper */
+            --paper2: #e4d7bd;   /* deeper tan paper for panels */
+            --line:   #211a12;   /* outline colour */
+            --gray:   #6b6250;   /* muted ink for secondary text */
+            --dim:    #a69c82;
+            --coral:  #e04b2f;   /* lead accent (vermilion) */
+            --cyan:   #2e7d54;   /* forest green */
+            --acid:   #f5b820;   /* rich gold (matches title art) */
+            --pop:    #d24f7a;   /* rose pop */
+            --violet: #5f5aa0;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* ===================================== */
-        /* RESPONSIVE SCALING                    */
-        /* Design is pixel-perfect at 1680px.    */
-        /* Few chunky breakpoints — slides should*/
-        /* feel stable with breathing room, not  */
-        /* constantly resizing as window moves.  */
-        /* ===================================== */
-        html {
-            overflow-x: hidden;
-        }
+        html { overflow-x: hidden; }
 
         body {
             font-family: 'Space Mono', monospace;
-            background: #050505;
-            color: var(--white);
+            background: #d9d2c2;
+            color: var(--ink);
             padding: 40px 0;
             overflow-x: hidden;
         }
 
-        .desktop-only-notice {
-            display: none;
-        }
-
+        /* ---------- SLIDE SHELL: framed paper box on a darker mat ---------- */
         .slide {
             width: 1600px;
             aspect-ratio: 16 / 9;
-            min-height: auto;
-            margin: 30px auto;
-            padding: 50px 60px;
+            margin: 34px auto;
+            padding: 62px 72px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             page-break-after: always;
             position: relative;
             overflow: hidden;
-            background: var(--black);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 4px;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.03);
-        }
-
-        /* Scanlines overlay */
-        .slide::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(255, 255, 255, 0.02) 2px,
-                rgba(255, 255, 255, 0.02) 4px
-            );
-            pointer-events: none;
-            z-index: 100;
+            background: var(--paper);
+            border: 4px solid var(--line);
         }
 
         .slide-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
-        /* ===================== */
-        /* CASE FILE FRAMING     */
-        /* ===================== */
-
-        .case-file {
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-top: none;
-            padding: 40px 45px 45px;
-            position: relative;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .case-file::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--pop), var(--chaos), transparent);
-            opacity: 0.5;
-        }
-
-        .folder-header {
-            display: flex;
-            align-items: flex-end;
-            gap: 0;
-            margin-bottom: 0;
-        }
-
-        .folder-tab {
-            background: var(--pop);
-            color: var(--black);
+        /* ---------- SECTION KICKER (boxed tab) ---------- */
+        .kicker {
+            display: inline-flex;
+            align-items: center;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 13px;
-            letter-spacing: 0.25em;
-            padding: 7px 22px 6px;
-            display: inline-block;
-            position: relative;
+            font-size: 20px;
+            letter-spacing: 0.3em;
+            color: var(--paper);
+            background: var(--coral);
+            border: 3px solid var(--line);
+            padding: 7px 20px 5px;
+            margin-bottom: 26px;
+            width: fit-content;
         }
+        .kicker.k-cyan   { background: var(--cyan);   color: var(--paper); }
+        .kicker.k-acid   { background: var(--acid);   color: var(--ink); }
+        .kicker.k-pop    { background: var(--pop);    color: var(--paper); }
+        .kicker.k-violet { background: var(--violet); color: var(--paper); }
 
-        .folder-tab.tab-chaos {
-            background: var(--chaos);
-        }
-
-        .folder-tab.tab-white {
-            background: var(--white);
-        }
-
-        .folder-tab-divider {
-            flex: 1;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.15);
-            align-self: flex-end;
-            margin-bottom: 0;
-        }
-
-        .folder-case-num {
-            font-family: 'Space Mono', monospace;
-            font-size: 11px;
-            color: var(--gray);
-            letter-spacing: 0.15em;
-            padding-bottom: 4px;
-            padding-left: 15px;
-        }
-
-        /* Stamp decorations */
-        .stamp {
-            display: inline-block;
-            border: 3px solid;
-            padding: 3px 14px;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 0.25em;
-            transform: rotate(-8deg);
-            opacity: 0.55;
-            user-select: none;
-        }
-
-        .stamp-pop { color: var(--pop); border-color: var(--pop); }
-        .stamp-chaos { color: var(--chaos); border-color: var(--chaos); }
-
-        /* Corner logo */
-        .corner-logo {
-            position: absolute;
-            top: 30px;
-            left: 40px;
-            z-index: 50;
-        }
-
-        .corner-logo img {
-            height: 35px;
-            filter: brightness(0) invert(1);
-            opacity: 0.7;
-        }
-
-        .file-number {
-            position: absolute;
-            bottom: 22px;
-            right: 40px;
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            color: var(--gray);
-            z-index: 50;
-        }
-
-        /* Typography */
+        /* ---------- TYPOGRAPHY ---------- */
         h1 {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 100px;
-            letter-spacing: 0.02em;
-            line-height: 0.9;
+            font-size: 118px;
+            letter-spacing: 0.01em;
+            line-height: 0.86;
+            color: var(--ink);
         }
 
         h2 {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 68px;
-            line-height: 0.9;
-            letter-spacing: 0.02em;
-            margin-bottom: 28px;
+            font-size: 76px;
+            line-height: 0.86;
+            letter-spacing: 0.01em;
+            margin-bottom: 24px;
+            color: var(--ink);
         }
 
         h3 {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 32px;
-            color: var(--pop);
-            margin-bottom: 18px;
+            font-size: 30px;
+            color: var(--ink);
+            margin-bottom: 16px;
             letter-spacing: 0.05em;
         }
 
         p {
             font-size: 17px;
-            line-height: 1.7;
-            color: var(--white);
-            margin-bottom: 18px;
+            line-height: 1.62;
+            color: var(--ink);
+            margin-bottom: 16px;
         }
+
+        .lead { font-size: 20px; }
 
         .label {
             display: inline-block;
             font-size: 11px;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.26em;
             color: var(--gray);
             margin-bottom: 12px;
         }
 
-        .highlight { color: var(--pop); }
-        .chaos-text { color: var(--chaos); font-weight: 700; }
-        .strike { text-decoration: line-through; opacity: 0.5; }
+        .hi   { color: var(--coral); }
+        .acid { color: var(--acid); }   /* mustard-gold pop, second accent */
+        .cy   { color: var(--cyan); }   /* forest green, structural accent */
+        .strong-w { color: var(--ink); font-weight: 700; }
 
-        /* Capsule image styling */
-        .capsule-frame {
+        /* Slide index / bottom corner */
+        .idx {
+            position: absolute;
+            bottom: 30px;
+            right: 52px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 20px;
+            letter-spacing: 0.25em;
+            color: var(--gray);
+            z-index: 5;
+        }
+        .idx b { color: var(--coral); }
+
+        .corner-logo {
+            position: absolute;
+            top: 42px;
+            right: 58px;
+            z-index: 6;
+        }
+        .corner-logo img {
+            height: 34px;
+            /* white logo -> vermilion "ink stamp" */
+            filter: brightness(0) saturate(100%) invert(34%) sepia(78%)
+                    saturate(2200%) hue-rotate(346deg) brightness(94%) contrast(96%);
+            opacity: 0.82;
+            mix-blend-mode: multiply;
+        }
+        /* on the dark video slide, multiply would swallow it, so let it sit normally */
+        .video-slide .corner-logo img { mix-blend-mode: normal; opacity: 0.92; }
+
+        /* ---------- IMAGE FRAMING: hard black-outlined box ---------- */
+        .slap {
             position: relative;
             display: inline-block;
-            transform: rotate(-2deg);
+            border: 4px solid var(--line);
+            background: var(--paper2);
         }
+        .slap img, .slap video { display: block; width: 100%; }
 
-        .capsule-frame img,
-        .capsule-frame video {
-            display: block;
-            border: 6px solid var(--white);
-            box-shadow: 10px 10px 0 var(--black), 12px 12px 0 var(--white);
-        }
+        .capsule-large  { width: 1000px; max-width: 100%; }
+        .capsule-medium img, .capsule-medium video { width: 680px; height: 382px; object-fit: cover; }
+        .capsule-medium video { filter: saturate(1); }
 
-        .capsule-frame video {
-            /* Same HDR/color-space guard as the hero video. */
-            filter: saturate(1);
-            object-fit: cover;
-        }
-
-        .capsule-large img,
-        .capsule-large video { max-width: 100%; width: 1150px; }
-        .capsule-medium img,
-        .capsule-medium video { width: 680px; height: 382px; }
-
-        /* Tape decoration */
-        .tape {
-            position: absolute;
-            background: var(--white);
-            color: var(--black);
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 14px;
-            letter-spacing: 0.1em;
-            padding: 8px 30px;
-            white-space: nowrap;
-            z-index: 10;
-        }
-
-        /* Info box */
-        .info-box {
-            background: var(--black);
-            border: 3px solid var(--white);
-            padding: 30px;
-            position: relative;
-        }
-
-        .info-box::before {
-            content: '>';
-            position: absolute;
-            top: -15px;
-            left: 20px;
-            font-family: 'Space Mono', monospace;
-            font-size: 24px;
-            color: var(--pop);
-            background: var(--black);
-            padding: 0 8px;
-        }
-
-        /* Stats */
-        .stat-row {
-            display: flex;
-            gap: 50px;
-            margin: 30px 0;
-        }
-
+        /* ---------- STATS ---------- */
+        .stat-row { display: flex; gap: 44px; margin: 28px 0; }
         .stat { display: flex; flex-direction: column; }
-
         .stat-number {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 68px;
-            line-height: 1;
-            color: var(--pop);
+            font-size: 74px;
+            line-height: 0.9;
+            color: var(--coral);
         }
-
         .stat-number .stat-unit {
-            font-size: 0.42em;
-            letter-spacing: 0.15em;
+            font-size: 0.55em;
+            letter-spacing: 0.12em;
             vertical-align: middle;
-            color: var(--chaos);
-            display: inline;
+            color: var(--coral);
         }
-
         .stat-label {
             font-size: 10px;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.18em;
             color: var(--gray);
-            margin-top: 4px;
+            margin-top: 6px;
             text-transform: uppercase;
         }
 
-        /* Feature list */
-        .feature-list {
-            list-style: none;
-            margin: 24px 0;
-        }
-
+        /* ---------- FEATURE LIST ---------- */
+        .feature-list { list-style: none; margin: 22px 0; }
         .feature-list li {
             font-size: 18px;
-            padding: 12px 0;
-            padding-left: 28px;
+            padding: 11px 0 11px 30px;
             position: relative;
-            border-bottom: 1px solid var(--light-gray);
+            color: var(--ink);
         }
-
+        .feature-list li + li { border-top: 1px solid rgba(22,19,15,0.14); }
         .feature-list li::before {
-            content: '>';
+            content: '';
             position: absolute;
             left: 0;
-            color: var(--pop);
-            font-weight: bold;
+            top: 18px;
+            width: 12px;
+            height: 12px;
+            background: var(--coral);
         }
 
-        /* Two column layout */
+        /* ---------- TWO COLUMN ---------- */
         .two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
+            gap: 52px;
             align-items: start;
         }
 
-        /* Table */
-        .punk-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0;
-        }
-
-        .punk-table th {
-            background: var(--white);
-            color: var(--black);
-            padding: 12px 18px;
-            text-align: left;
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 16px;
-            letter-spacing: 0.1em;
-        }
-
-        .punk-table td {
-            padding: 12px 18px;
-            font-size: 15px;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .punk-table tr:hover td { background: var(--dark-gray); }
-
-        /* Pillar boxes */
+        /* ---------- PILLARS: outlined paper cards ---------- */
         .pillar-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 18px;
             margin: 24px 0;
         }
-
         .pillar-box {
-            background: var(--dark-gray);
-            border-left: 4px solid var(--pop);
-            padding: 22px;
+            background: var(--paper2);
+            border: 3px solid var(--line);
+            padding: 22px 24px;
+            position: relative;
         }
-
+        .pillar-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 8px;
+            background: var(--coral);
+            border-bottom: 3px solid var(--line);
+        }
+        .pillar-box.pb-cyan::before   { background: var(--cyan); }
+        .pillar-box.pb-acid::before   { background: var(--acid); }
+        .pillar-box.pb-violet::before { background: var(--violet); }
         .pillar-box h4 {
             font-family: 'Bebas Neue', sans-serif;
             font-size: 26px;
-            color: var(--chaos);
-            margin-bottom: 8px;
-            letter-spacing: 0.05em;
+            color: var(--ink);
+            margin: 8px 0 8px;
+            letter-spacing: 0.04em;
         }
+        .pillar-box p { font-size: 15px; margin: 0; color: var(--gray); }
 
-        .pillar-box p {
-            font-size: 15px;
-            margin: 0;
-            color: var(--gray);
-        }
-
-        /* Quote */
+        /* ---------- QUOTE ---------- */
         .quote {
-            font-size: 22px;
-            font-style: italic;
-            color: var(--white);
-            border-left: 4px solid var(--pop);
-            padding-left: 28px;
-            margin: 30px 0;
-            opacity: 0.9;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 34px;
+            line-height: 1.05;
+            letter-spacing: 0.02em;
+            color: var(--ink);
+            padding: 4px 0 4px 24px;
+            border-left: 8px solid var(--coral);
+            margin: 26px 0;
         }
+        .quote .acid { color: var(--coral); }
 
-        /* Timeline */
-        .timeline {
-            display: flex;
-            justify-content: space-between;
-            margin: 40px 0;
-            position: relative;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            top: 25px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--light-gray);
-        }
-
-        .timeline-item {
-            text-align: center;
-            position: relative;
-            flex: 1;
-        }
-
-        .timeline-dot {
-            width: 16px;
-            height: 16px;
-            background: var(--light-gray);
-            border-radius: 50%;
-            margin: 17px auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .timeline-dot.complete {
-            background: var(--chaos);
-            box-shadow: 0 0 15px rgba(92, 229, 198, 0.5);
-        }
-
-        .timeline-label {
-            font-size: 13px;
-            color: var(--white);
-            letter-spacing: 0.05em;
-        }
-
-        .timeline-date {
-            font-size: 10px;
-            color: var(--gray);
-            margin-top: 4px;
+        /* ---------- CORE LOOP CHIPS ---------- */
+        .loop { display: flex; align-items: center; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+        .loop-label { font-size: 10px; letter-spacing: 0.2em; color: var(--gray); margin-right: 4px; }
+        .chip {
+            font-family: 'Bebas Neue', sans-serif;
+            padding: 8px 16px;
+            font-size: 15px;
             letter-spacing: 0.1em;
+            color: var(--paper);
+            background: var(--coral);
+            border: 3px solid var(--line);
         }
+        .chip.c-cyan  { background: var(--cyan); color: var(--paper); }
+        .chip.c-white { background: var(--acid); color: var(--ink); }
+        .loop .arw { color: var(--ink); font-size: 18px; }
 
-        .timeline-notes {
-            list-style: none;
-            margin: 14px 8px 0;
-            padding: 0;
-            text-align: left;
-            font-size: 11px;
-            line-height: 1.45;
-            color: var(--gray);
+        /* ---------- MARKET CARDS ---------- */
+        .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+        .market-card { display: flex; align-items: stretch; gap: 0; background: color-mix(in srgb, var(--coral) 8%, var(--paper2)); border: 3px solid var(--line); }
+        .market-card-img {
+            width: 232px; height: 148px;
+            object-fit: cover; display: block; flex-shrink: 0;
+            border-right: 3px solid var(--line);
         }
-
-        /* ===== ROADMAP (slide 08) ===== */
-        .roadmap-row {
-            display: flex;
-            justify-content: space-between;
-            gap: 14px;
-            position: relative;
-            padding: 0 10px;
+        .market-card-stats { flex: 1; padding: 12px 18px; }
+        .market-card-stats table { width: 100%; border-collapse: collapse; }
+        .market-card-stats td { padding: 1px 0; font-size: 12px; vertical-align: top; }
+        .market-card-stats td:first-child {
+            color: var(--cyan); font-weight: 700; letter-spacing: 0.04em;
+            white-space: nowrap; padding-right: 14px; width: 1%;
         }
+        .market-card-stats td:last-child { text-align: right; color: var(--ink); }
+        .market-card-stats .stat-highlight { color: var(--coral); font-weight: 700; }
 
+        /* ---------- TEAM ---------- */
+        .company-bio {
+            background: var(--paper2);
+            border: 3px solid var(--line);
+            border-left: 8px solid var(--cyan);
+            padding: 20px 26px;
+            margin-bottom: 24px;
+        }
+        .company-bio p { font-size: 16px; color: var(--ink); margin: 0; line-height: 1.62; }
+
+        .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .team-card { background: color-mix(in srgb, var(--coral) 8%, var(--paper2)); border: 3px solid var(--line); display: flex; flex-direction: row; align-items: stretch; }
+        .team-card img { border-right: 3px solid var(--line); }
+        .team-card-body { padding: 18px 24px; display: flex; flex-direction: column; justify-content: center; }
+        .team-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 30px; color: var(--ink);
+            letter-spacing: 0.04em; margin-bottom: 4px;
+        }
+        .team-role { font-size: 11px; letter-spacing: 0.16em; color: var(--coral); margin-bottom: 10px; font-weight: 700; }
+        .team-bio { font-size: 13px; color: var(--gray); line-height: 1.55; margin: 0; }
+
+        /* ---------- ROADMAP ---------- */
+        .roadmap-row { display: flex; justify-content: space-between; gap: 14px; position: relative; padding: 0 10px; }
         .roadmap-row::before {
             content: '';
             position: absolute;
-            top: 50px;
-            left: 70px;
-            right: 70px;
-            height: 2px;
-            background: repeating-linear-gradient(
-                to right,
-                rgba(255, 255, 255, 0.12) 0 6px,
-                transparent 6px 12px
-            );
+            top: 48px; left: 70px; right: calc(12.5% + 46px); height: 3px;
+            background: repeating-linear-gradient(to right, var(--line) 0 8px, transparent 8px 15px);
             z-index: 0;
         }
-
-        .roadmap-stage {
-            flex: 1;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-            min-width: 0;
-        }
-
+        .roadmap-stage { flex: 1; text-align: center; position: relative; z-index: 1; min-width: 0; }
         .roadmap-ring {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 3px solid var(--light-gray);
-            margin: 0 auto 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--black);
-            position: relative;
-            transition: all 0.3s ease;
+            width: 92px; height: 92px; border-radius: 50%;
+            border: 3px solid var(--line);
+            margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;
+            background: var(--paper); position: relative;
         }
-
-        .roadmap-ring-inner {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: var(--light-gray);
-        }
-
-        .stage-complete .roadmap-ring {
-            border-color: var(--chaos);
-            box-shadow: 0 0 20px rgba(92, 229, 198, 0.25);
-        }
-        .stage-complete .roadmap-ring-inner {
-            background: var(--chaos);
-            box-shadow: 0 0 12px rgba(92, 229, 198, 0.6);
-        }
-
+        .roadmap-ring-inner { width: 40px; height: 40px; border-radius: 50%; background: var(--paper2); border: 2px solid var(--line); }
+        .stage-complete .roadmap-ring-inner { background: var(--cyan); }
         .stage-active .roadmap-ring {
-            border-color: var(--pop);
-            box-shadow: 0 0 24px rgba(255, 45, 149, 0.35);
             animation: ringPulse 2.2s ease-in-out infinite;
         }
-        .stage-active .roadmap-ring-inner {
-            background: var(--pop);
-            box-shadow: 0 0 14px rgba(255, 45, 149, 0.7);
-        }
-
+        .stage-active .roadmap-ring-inner { background: var(--coral); }
         @keyframes ringPulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 45, 149, 0.3); }
-            50%      { box-shadow: 0 0 34px rgba(255, 45, 149, 0.55); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(229,54,29,0.5); }
+            50%      { box-shadow: 0 0 0 9px rgba(229,54,29,0); }
         }
-
-        .stage-future .roadmap-ring {
-            border-color: rgba(255, 255, 255, 0.18);
-        }
-        .stage-future .roadmap-ring-inner {
-            background: rgba(255, 255, 255, 0.12);
-        }
-
-        .roadmap-date {
-            font-size: 10px;
-            letter-spacing: 0.22em;
-            margin-bottom: 6px;
-            font-weight: 700;
-            color: var(--gray);
-        }
-        .stage-complete .roadmap-date { color: var(--chaos); }
-        .stage-active   .roadmap-date { color: var(--pop); }
-
+        .roadmap-date { font-size: 10px; letter-spacing: 0.2em; margin-bottom: 6px; font-weight: 700; color: var(--gray); }
+        .stage-complete .roadmap-date { color: var(--cyan); }
+        .stage-active   .roadmap-date { color: var(--coral); }
         .roadmap-title {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 18px;
-            letter-spacing: 0.08em;
-            color: var(--white);
-            margin-bottom: 10px;
+            font-size: 18px; letter-spacing: 0.05em; color: var(--ink); margin-bottom: 10px;
         }
-
-        .roadmap-notes {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            text-align: left;
-            font-size: 11px;
-            line-height: 1.5;
-            color: var(--gray);
-        }
-        .roadmap-notes li {
-            position: relative;
-            padding-left: 12px;
-            margin-bottom: 4px;
-        }
+        .roadmap-notes { list-style: none; margin: 0; padding: 0; text-align: left; font-size: 11px; line-height: 1.5; color: var(--gray); }
+        .roadmap-notes li { position: relative; padding-left: 12px; margin-bottom: 4px; }
         .roadmap-notes li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 6px;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: var(--chaos);
-            opacity: 0.6;
+            content: ''; position: absolute; left: 0; top: 6px;
+            width: 5px; height: 5px; background: var(--cyan);
         }
-        .stage-active .roadmap-notes li::before { background: var(--pop); opacity: 0.8; }
-        .stage-future .roadmap-notes li::before { background: rgba(255,255,255,0.25); }
+        .stage-active .roadmap-notes li::before { background: var(--coral); }
+        .stage-future .roadmap-notes li::before { background: var(--dim); }
 
-        .timeline-notes li {
-            position: relative;
-            padding-left: 12px;
-            margin-bottom: 4px;
-        }
-
-        .timeline-notes li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 6px;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: var(--chaos);
-            opacity: 0.7;
-        }
-
-        /* Status indicator */
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 13px;
-            letter-spacing: 0.15em;
-            padding: 10px 20px;
-            border: 1px solid var(--light-gray);
-            margin: 18px 0;
-        }
-
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            background: var(--pop);
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 45, 149, 0.5); }
-            50% { opacity: 0.8; box-shadow: 0 0 10px 5px rgba(255, 45, 149, 0.3); }
-        }
-
-        /* Contact section */
-        .contact-box {
-            background: var(--dark-gray);
-            border: 3px solid var(--white);
-            padding: 40px;
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .contact-box a {
-            color: var(--chaos);
-            text-decoration: none;
-            border-bottom: 2px solid var(--chaos);
-            transition: all 0.2s;
-        }
-
-        .contact-box a:hover {
-            color: var(--pop);
-            border-color: var(--pop);
-        }
-
-        /* Module combo box */
-        .combo-box {
-            background: var(--dark-gray);
-            border: 2px solid var(--light-gray);
-            padding: 16px 20px;
-            margin: 8px 0;
-        }
-
-        .combo-title {
-            color: var(--pop);
-            font-weight: bold;
-            font-size: 17px;
-        }
-
-        .combo-desc {
-            color: var(--gray);
-            font-size: 13px;
-            margin-top: 4px;
-        }
-
-        /* Play the Build CTA */
-        .play-build-cta {
+        /* ---------- CTA / BUTTONS: hard-outlined solid blocks ---------- */
+        .cta {
             display: inline-block;
             font-family: 'Bebas Neue', sans-serif;
             font-size: 22px;
-            letter-spacing: 0.15em;
-            color: var(--black);
-            background: var(--chaos);
-            padding: 12px 36px;
+            letter-spacing: 0.1em;
+            color: var(--paper);
+            background: var(--coral);
+            border: 3px solid var(--line);
+            padding: 13px 34px;
             text-decoration: none;
-            transition: all 0.2s;
+            transition: background 0.15s, color 0.15s, transform 0.1s;
         }
+        .cta:hover { background: var(--ink); color: var(--paper); transform: translate(-2px,-2px); }
+        .cta.cta-ghost { background: var(--cyan); color: var(--paper); }
+        .cta.cta-ghost:hover { background: var(--ink); color: var(--paper); }
 
-        .play-build-cta:hover {
-            background: var(--pop);
-            color: var(--white);
-        }
+        /* ---------- MODULE / ITEM GRID (JS-driven, hooks preserved) ---------- */
+        .item-slot-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 14px; }
+        .item-slot { display: flex; flex-direction: row; align-items: center; gap: 10px; transition: opacity 0.4s ease; }
+        .countdown-ring { transform: rotate(-90deg); flex-shrink: 0; }
 
-        /* ===================== */
-        /* VIDEO SLIDE           */
-        /* ===================== */
-
-        .video-slide {
-            padding: 0;
-        }
-
-        .video-container {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .video-container video {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            /* No-op filter forces Chromium to composite the video through the */
-            /* filter pipeline in SDR, avoiding the HDR over-saturation bug     */
-            /* where SDR video is misinterpreted as HDR on wide-gamut displays. */
-            filter: saturate(1);
-        }
-
-        .video-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0) 100%);
-            z-index: 2;
-        }
-
-        .video-placeholder {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--dark-gray);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 2px dashed var(--light-gray);
-        }
-
-        .video-placeholder-icon {
-            font-size: 72px;
-            opacity: 0.2;
-            margin-bottom: 20px;
-        }
-
-        .video-label {
-            position: absolute;
-            bottom: 50px;
-            left: 60px;
-            z-index: 5;
-        }
-
-        /* ===================== */
-        /* MARKET ANALYSIS CARDS */
-        /* ===================== */
-
-        .market-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin: 14px 0;
-        }
-
-        .market-card {
-            display: flex;
-            align-items: center;
-            gap: 0;
-            background: none;
-            overflow: visible;
-        }
-
-        .market-card-img {
-            width: 240px;
-            height: 135px;
-            object-fit: cover;
-            display: block;
-            flex-shrink: 0;
-            border: 2px solid var(--light-gray);
-            border-radius: 4px;
-        }
-
-        .market-card-stats {
-            flex: 1;
-            padding: 0 0 0 16px;
-        }
-
-        .market-card-stats table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .market-card-stats td {
-            padding: 1px 0;
-            font-size: 12px;
-            vertical-align: top;
-        }
-
-        .market-card-stats td:first-child {
-            color: var(--chaos);
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            white-space: nowrap;
-            padding-right: 14px;
-            width: 1%;
-        }
-
-        .market-card-stats td:last-child {
-            text-align: right;
-            color: var(--white);
-        }
-
-        .market-card-stats .stat-highlight {
-            color: var(--pop);
-            font-weight: 700;
-        }
-
-        /* ===================== */
-        /* MODULE IMAGE GRID     */
-        /* ===================== */
-
-        .module-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-            margin: 20px 0;
-        }
-
-        .module-card {
-            background: var(--dark-gray);
-            border: 1px solid var(--light-gray);
-            padding: 20px;
-            display: flex;
-            gap: 18px;
-            align-items: center;
-        }
-
-        .module-img-placeholder {
-            width: 100px;
-            height: 100px;
-            background: var(--white);
-            flex-shrink: 0;
-            border: 1px solid var(--light-gray);
-            object-fit: cover;
-            display: block;
-        }
-
-        img.module-img-placeholder {
-            background: var(--black);
-            object-fit: contain;
-            padding: 6px;
-        }
-
-        .module-card-info {}
-
-        .module-card-name {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 24px;
-            color: var(--pop);
-            letter-spacing: 0.05em;
-            margin-bottom: 4px;
-        }
-
-        .module-card-desc {
-            font-size: 13px;
-            color: var(--gray);
-            line-height: 1.4;
-        }
-
-        /* ===================== */
-        /* TEAM CARDS            */
-        /* ===================== */
-
-        .company-bio {
-            background: var(--dark-gray);
-            border-left: 4px solid var(--chaos);
-            padding: 22px 28px;
-            margin-bottom: 30px;
-        }
-
-        .company-bio p {
-            font-size: 16px;
-            color: var(--gray);
-            margin: 0;
-            line-height: 1.7;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .team-card {
-            background: var(--dark-gray);
-            border: 1px solid var(--light-gray);
-            overflow: hidden;
-            display: flex;
-            flex-direction: row;
-            align-items: stretch;
-        }
-
-        .team-photo-placeholder {
-            width: 320px;
-            min-height: 240px;
-            flex-shrink: 0;
-            background: var(--light-gray);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 9px;
-            letter-spacing: 0.2em;
-            color: var(--gray);
-            border-right: 2px solid var(--pop);
-        }
-
-        .team-photo-placeholder-icon {
-            font-size: 28px;
-            opacity: 0.25;
-            margin-bottom: 4px;
-        }
-
-        .team-card-body {
-            padding: 16px 22px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .team-name {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 28px;
-            color: var(--white);
-            letter-spacing: 0.05em;
-            margin-bottom: 4px;
-        }
-
-        .team-role {
-            font-size: 11px;
-            letter-spacing: 0.2em;
-            color: var(--chaos);
-            margin-bottom: 10px;
-        }
-
-        .team-bio {
-            font-size: 13px;
-            color: var(--gray);
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        /* ===================== */
-        /* GRANT PAGE            */
-        /* ===================== */
-
-        .grant-intro {
-            font-size: 17px;
-            color: var(--gray);
-            margin-bottom: 30px;
-            line-height: 1.7;
-        }
-
-        .grant-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .grant-card {
-            border: 1px solid var(--light-gray);
-            padding: 22px 28px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .grant-card-left {}
-
-        .grant-card-name {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 26px;
-            color: var(--white);
-            letter-spacing: 0.05em;
-            margin-bottom: 5px;
-        }
-
-        .grant-card-desc {
-            font-size: 13px;
-            color: var(--gray);
-        }
-
-        .grant-card-right {
-            text-align: right;
-            flex-shrink: 0;
-        }
-
-        .grant-amount {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 32px;
-            color: var(--chaos);
-            letter-spacing: 0.05em;
-        }
-
-        .grant-status {
-            font-size: 10px;
-            letter-spacing: 0.2em;
-            color: var(--gray);
-            margin-top: 3px;
-        }
-
-        /* Thank You */
-        .thankyou-big {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 120px;
-            line-height: 0.85;
-            letter-spacing: 0.02em;
-            margin-bottom: 30px;
-        }
-
-        /* ===================== */
-        /* ITEM SLOTS            */
-        /* ===================== */
-
-        .item-slot-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px 14px;
-        }
-
-        .item-slot {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 10px;
-            transition: opacity 0.4s ease;
-        }
-
-        .countdown-ring {
-            transform: rotate(-90deg);
-            flex-shrink: 0;
-        }
-
-        @keyframes moduleOut {
-            0%   { opacity: 1; transform: translateY(0px); }
-            100% { opacity: 0; transform: translateY(10px); }
-        }
-        @keyframes moduleIn {
-            0%   { opacity: 0; transform: translateY(-10px); }
-            100% { opacity: 1; transform: translateY(0px); }
-        }
-        @keyframes comboOut {
-            0%   { opacity: 1; transform: translateY(0px); }
-            100% { opacity: 0; transform: translateY(8px); }
-        }
-        @keyframes comboIn {
-            0%   { opacity: 0; transform: translateY(-8px); }
-            100% { opacity: 1; transform: translateY(0px); }
-        }
-        @keyframes labelFlash {
-            0%   { opacity: 0; transform: translateY(-4px); }
-            100% { opacity: 1; transform: translateY(0px); }
-        }
+        @keyframes moduleOut { 0% { opacity: 1; transform: translateY(0);} 100% { opacity: 0; transform: translateY(10px);} }
+        @keyframes moduleIn  { 0% { opacity: 0; transform: translateY(-10px);} 100% { opacity: 1; transform: translateY(0);} }
+        @keyframes comboOut  { 0% { opacity: 1; transform: translateY(0);} 100% { opacity: 0; transform: translateY(8px);} }
+        @keyframes comboIn   { 0% { opacity: 0; transform: translateY(-8px);} 100% { opacity: 1; transform: translateY(0);} }
+        @keyframes labelFlash{ 0% { opacity: 0; transform: translateY(-4px);} 100% { opacity: 1; transform: translateY(0);} }
         .mod-out   { animation: moduleOut 0.18s ease-in  forwards; }
         .mod-in    { animation: moduleIn  0.32s ease-out forwards; }
         .combo-out { animation: comboOut  0.18s ease-in  forwards; }
         .combo-in  { animation: comboIn   0.32s ease-out forwards; }
         .label-in  { animation: labelFlash 0.32s ease-out forwards; }
 
-        @keyframes cdSpin {
-            from { stroke-dashoffset: 0; }
-            to   { stroke-dashoffset: 94.25; }
-        }
-
-        #countdownArc {
-            animation: cdSpin 10s linear infinite;
-        }
+        @keyframes cdSpin { from { stroke-dashoffset: 0; } to { stroke-dashoffset: 94.25; } }
+        #countdownArc { animation: cdSpin 10s linear infinite; }
 
         .item-inner {
-            position: relative;
-            width: 110px;
-            height: 110px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: relative; width: 96px; height: 96px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--ink);
+            border: 3px solid var(--line);
+            border-radius: 50%;
+            box-shadow: 4px 4px 0 rgba(22,19,15,0.28);
         }
-
         .item-img {
-            position: absolute;
-            width: 70%;
-            height: 70%;
-            object-fit: contain;
-            z-index: 1;
-            transition: opacity 0.35s ease;
-            animation: itemFloat 3.2s ease-in-out infinite;
+            position: absolute; width: 66%; height: 66%; object-fit: contain; z-index: 2;
+            transition: opacity 0.35s ease; animation: itemFloat 3.2s ease-in-out infinite;
         }
-
-        @keyframes itemFloat {
-            0%, 100% { transform: translateY(0); }
-            50%      { transform: translateY(-5px); }
-        }
-
-        /* Stagger gently so items roll like a wave across the grid */
+        @keyframes itemFloat { 0%, 100% { transform: translateY(0);} 50% { transform: translateY(-5px);} }
         .item-slot:nth-child(8n+1) .item-img { animation-delay:  0s; }
         .item-slot:nth-child(8n+2) .item-img { animation-delay: -0.06s; }
         .item-slot:nth-child(8n+3) .item-img { animation-delay: -0.12s; }
@@ -1144,460 +427,155 @@
         .item-slot:nth-child(8n+6) .item-img { animation-delay: -0.30s; }
         .item-slot:nth-child(8n+7) .item-img { animation-delay: -0.36s; }
         .item-slot:nth-child(8n+8) .item-img { animation-delay: -0.42s; }
-
-        .item-bubble-overlay {
-            position: absolute;
-            width: 110%;
-            height: 110%;
-            object-fit: contain;
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        .item-slot-text {
-            flex: 1;
-            min-width: 0;
-        }
-
+        .item-bubble-overlay { position: absolute; width: 92%; height: 92%; object-fit: contain; z-index: 1; pointer-events: none; opacity: 0.85; mix-blend-mode: screen; }
+        .item-slot-text { flex: 1; min-width: 0; }
         .item-slot-name {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 16px;
-            color: var(--white);
-            letter-spacing: 0.08em;
-            transition: opacity 0.35s ease;
-            line-height: 1.1;
-            margin-bottom: 3px;
+            font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--ink);
+            letter-spacing: 0.06em; transition: opacity 0.35s ease; line-height: 1.1; margin-bottom: 3px;
         }
+        .item-slot-desc { font-size: 11px; color: var(--gray); line-height: 1.4; transition: opacity 0.35s ease; }
 
-        .item-slot-desc {
-            font-size: 11px;
-            color: var(--gray);
-            line-height: 1.4;
-            transition: opacity 0.35s ease;
+        .combo-box { background: color-mix(in srgb, var(--cyan) 8%, var(--paper2)); border: 3px solid var(--line); border-left: 6px solid var(--cyan); padding: 14px 18px; margin: 8px 0; }
+        .combo-box:nth-child(even) { border-left-color: var(--coral); }
+        .combo-title { color: var(--ink); font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.04em; }
+        .combo-desc { color: var(--gray); font-size: 13px; margin-top: 3px; }
+
+        /* ---------- VIDEO SLIDE ---------- */
+        .video-slide { padding: 0; }
+        .video-container { position: absolute; inset: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .video-container video {
+            position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+            filter: saturate(1);
         }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-18px); }
-        }
-
-        .floating-character-wrapper {
-            position: absolute;
-            right: 60px;
-            left: 45%;
-            top: 0;
-            bottom: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .video-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(22,19,15,0.78) 0%, rgba(22,19,15,0.1) 45%, rgba(22,19,15,0) 100%);
             z-index: 2;
-            pointer-events: none;
+        }
+        .video-label { position: absolute; bottom: 52px; left: 64px; z-index: 5; }
+        .video-label h2 { color: var(--paper); }
+        .video-label .label { color: var(--paper); opacity: 0.85; }
+        .video-slide::before { display: none; }
+
+        /* ---------- FLOATING CHARACTER (final slide) ---------- */
+        @keyframes float { 0%, 100% { transform: translateY(0);} 50% { transform: translateY(-18px);} }
+        .floating-character-wrapper {
+            position: absolute; right: 60px; left: 46%; top: 0; bottom: 0;
+            display: flex; align-items: center; justify-content: center; z-index: 1; pointer-events: none;
+        }
+        .floating-character { height: 360px; animation: float 3.5s ease-in-out infinite; }
+
+        .thankyou-big {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 130px; line-height: 0.82; letter-spacing: 0.01em; margin-bottom: 20px; color: var(--ink);
         }
 
-        .floating-character {
-            height: 340px;
-            animation: float 3.5s ease-in-out infinite;
-        }
-
-        .video-slide::before {
-            display: none;
-        }
-
-        /* ============================================= */
-        /* MOBILE  (phones ≤ 750px viewport)            */
-        /* Body renders at 1600px then zooms to screen. */
-        /* Multiply desired on-screen px by ~4 to get   */
-        /* the correct pre-zoom value used below.        */
-        /* ============================================= */
+        /* ============================================================
+           MOBILE (phones =< 750px). Body renders at 1600px then zooms.
+           Multiply on-screen px by ~4 for the pre-zoom values below.
+           ============================================================ */
         @media (max-width: 750px) {
+            .slide { aspect-ratio: unset; padding: 100px 72px 160px; border-width: 8px; }
+            .slide.video-slide { aspect-ratio: 16 / 9; padding: 0; }
 
-            /* Remove 16:9 lock — slides grow as tall as needed */
-            .slide {
-                aspect-ratio: unset;
-                padding: 90px 80px 160px;
-            }
+            .corner-logo { top: 60px; right: 66px; left: auto; }
+            .corner-logo img { height: 70px; }
+            .idx { bottom: 56px; right: 66px; font-size: 46px; }
 
-            /* Video slide has no flowing content — give it a tall portrait
-               frame so the gameplay video fills the screen instead of
-               collapsing to near-zero height. */
-            .slide.video-slide {
-                aspect-ratio: 16 / 9;
-                padding: 0;
-            }
+            p { font-size: 60px !important; line-height: 1.6; margin-bottom: 36px; }
+            .lead { font-size: 66px !important; }
+            h1 { font-size: 150px; }
+            h2 { font-size: 112px; margin-bottom: 40px; }
+            h3 { font-size: 66px; margin-bottom: 30px; }
+            .label { font-size: 44px; margin-bottom: 20px; }
+            .kicker { font-size: 52px; padding: 16px 40px 12px; margin-bottom: 44px; border-width: 6px; }
 
-            .case-file {
-                padding: 60px 55px 70px;
-            }
+            .stat-number { font-size: 176px; }
+            .stat-label { font-size: 42px; margin-top: 10px; }
+            .stat-row { gap: 70px; flex-wrap: wrap; margin: 40px 0; }
 
-            .corner-logo {
-                top: 50px;
-                left: 55px;
-            }
+            .feature-list li { font-size: 56px; padding: 22px 0 22px 56px; }
+            .feature-list li::before { top: 40px; width: 26px; height: 26px; }
+            .quote { font-size: 76px; line-height: 1.1; margin: 44px 0; padding-left: 40px; border-left-width: 16px; }
 
-            .corner-logo img {
-                height: 80px;
-            }
+            .two-col { grid-template-columns: 1fr; gap: 60px; }
+            .pillar-grid { grid-template-columns: 1fr; gap: 28px; }
+            .pillar-box { border-width: 6px; }
+            .pillar-box h4 { font-size: 70px; }
+            .pillar-box p { font-size: 50px; }
 
-            /* Push file-number well clear of the slide content */
-            .file-number {
-                bottom: 60px;
-                right: 70px;
-            }
+            .capsule-medium img, .capsule-medium video { width: 100%; height: auto; }
+            .slap { border-width: 8px; }
 
-            /* ── Text scale-up (small text becomes readable) ── */
-            p {
-                font-size: 60px !important;
-                line-height: 1.65;
-                margin-bottom: 36px;
-            }
+            .item-inner { width: 180px; height: 180px; }
+            .item-slot-name { font-size: 56px; }
+            .item-slot-desc { font-size: 44px; }
+            .combo-box { border-width: 6px; border-left-width: 12px; }
+            .combo-title { font-size: 62px; }
+            .combo-desc { font-size: 46px; }
 
-            h2 {
-                font-size: 108px;
-                margin-bottom: 40px;
-            }
+            .loop-label { font-size: 40px; }
+            .chip { font-size: 48px; padding: 16px 30px; border-width: 6px; }
+            .loop .arw { font-size: 52px; }
 
-            h3 {
-                font-size: 68px;
-                margin-bottom: 32px;
-            }
+            .market-grid { grid-template-columns: 1fr; gap: 44px; }
+            .market-card { flex-direction: column; border-width: 6px; }
+            .market-card-img { width: 100%; height: auto; border-right: none; border-bottom: 6px solid var(--line); }
+            .market-card-stats td { font-size: 46px; padding: 8px 0; }
 
-            .label {
-                font-size: 44px;
-                margin-bottom: 20px;
-            }
-
-            .stat-number {
-                font-size: 180px;
-            }
-
-            .stat-label {
-                font-size: 44px;
-                margin-top: 10px;
-            }
-
-            .stat-row {
-                gap: 80px;
-                flex-wrap: wrap;
-                margin: 40px 0;
-            }
-
-            .feature-list li {
-                font-size: 56px;
-                padding: 20px 0 20px 52px;
-            }
-
-            .quote {
-                font-size: 64px;
-                line-height: 1.5;
-                margin: 44px 0;
-            }
-
-            .folder-tab {
-                font-size: 44px;
-                padding: 14px 36px 12px;
-            }
-
-            .folder-case-num {
-                font-size: 40px;
-            }
-
-            .file-number {
-                font-size: 40px;
-            }
-
-            /* ── Layout: stack all multi-column grids ── */
-            .two-col {
-                grid-template-columns: 1fr;
-                gap: 60px;
-            }
-
-            .pillar-grid {
-                grid-template-columns: 1fr;
-                gap: 28px;
-            }
-
-            .pillar-box h4 {
-                font-size: 72px;
-            }
-
-            /* ── Capsule media ── */
-            .capsule-medium img,
-            .capsule-medium video {
-                width: 100%;
-                height: auto;
-            }
-
-            /* ── Modules/item slide ── */
-            .item-inner {
-                width: 180px;
-                height: 180px;
-                flex-shrink: 0;
-            }
-
-            .item-slot-name {
-                font-size: 56px;
-            }
-
-            .item-slot-desc {
-                font-size: 44px;
-            }
-
-            .combo-title {
-                font-size: 64px;
-            }
-
-            .combo-desc {
-                font-size: 48px;
-            }
-
-            /* ── Market slide ── */
-            .market-grid {
-                grid-template-columns: 1fr;
-                gap: 44px;
-            }
-
-            .market-card {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .market-card-img {
-                width: 100%;
-                height: auto;
-            }
-
-            .market-card-stats td {
-                font-size: 46px;
-                padding: 8px 0;
-            }
-
-            /* ── Team slide ── */
-            .team-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .team-card {
-                flex-direction: column;
-            }
-
-            /* Override the inline-style width on team portrait imgs */
-            .team-card > img {
-                width: 100% !important;
-                min-height: 500px !important;
-                border-right: none !important;
-                border-bottom: 2px solid var(--pop);
-            }
-
-            .team-name   { font-size: 84px; }
-            .team-role   { font-size: 40px; }
-            .team-bio    { font-size: 52px; line-height: 1.6; }
+            .team-grid { grid-template-columns: 1fr; }
+            .team-card { flex-direction: column; border-width: 6px; }
+            .team-card > img { width: 100% !important; min-height: 520px !important; border-right: none !important; border-bottom: 6px solid var(--line); }
+            .team-name { font-size: 84px; }
+            .team-role { font-size: 40px; }
+            .team-bio { font-size: 52px; line-height: 1.6; }
+            .company-bio { border-width: 6px; border-left-width: 16px; }
             .company-bio p { font-size: 56px !important; }
 
-            /* ── Roadmap: fully vertical — dots on left, text on right ── */
-            .roadmap-row {
-                display: block;
-                padding: 20px 0;
-            }
-
-            /* Rotate the connecting line from horizontal to vertical */
+            .roadmap-row { display: block; padding: 20px 0; }
             .roadmap-row::before {
-                top: 90px;
-                bottom: 90px;
-                left: 80px;
-                right: auto;
-                width: 2px;
-                height: auto;
-                background: repeating-linear-gradient(
-                    to bottom,
-                    rgba(255, 255, 255, 0.18) 0 8px,
-                    transparent 8px 16px
-                );
+                top: 90px; bottom: 90px; left: 80px; right: auto; width: 3px; height: auto;
+                background: repeating-linear-gradient(to bottom, var(--line) 0 9px, transparent 9px 18px);
             }
-
-            .roadmap-stage {
-                display: grid;
-                grid-template-columns: 160px 1fr;
-                column-gap: 60px;
-                padding: 36px 0;
-                text-align: left;
-                flex: none;
-            }
-
-            .roadmap-ring {
-                grid-row: 1 / 4;
-                grid-column: 1;
-                margin: 0 !important;
-                align-self: start;
-                width: 160px;
-                height: 160px;
-            }
-
-            .roadmap-ring-inner {
-                width: 70px;
-                height: 70px;
-            }
-
+            .roadmap-stage { display: grid; grid-template-columns: 160px 1fr; column-gap: 60px; padding: 36px 0; text-align: left; flex: none; }
+            .roadmap-ring { grid-row: 1 / 4; grid-column: 1; margin: 0 !important; align-self: start; width: 160px; height: 160px; }
+            .roadmap-ring-inner { width: 70px; height: 70px; }
             .roadmap-date  { grid-column: 2; grid-row: 1; font-size: 40px; margin-bottom: 10px; }
             .roadmap-title { grid-column: 2; grid-row: 2; font-size: 64px; margin-bottom: 16px; }
             .roadmap-notes { grid-column: 2; grid-row: 3; font-size: 44px; }
             .roadmap-notes li { margin-bottom: 10px; padding-left: 22px; }
-            .roadmap-notes li::before { top: 14px; width: 8px; height: 8px; }
+            .roadmap-notes li::before { top: 14px; width: 16px; height: 16px; }
 
-            /* ── Timeline ── */
-            .timeline {
-                flex-wrap: wrap;
-                gap: 40px;
-            }
+            .floating-character-wrapper { display: none; }
+            .thankyou-big { font-size: 280px !important; margin-bottom: 40px !important; }
+            .cta { font-size: 64px !important; padding: 28px 56px !important; letter-spacing: 0.08em !important; border-width: 6px; }
 
-            .timeline-item  { flex: 0 0 30%; }
-            .timeline-label { font-size: 48px; }
-            .timeline-date  { font-size: 36px; }
-            .timeline-notes { font-size: 36px; }
-
-            /* ── Status badge ── */
-            .status-badge {
-                font-size: 44px;
-                padding: 28px 56px;
-            }
-
-            /* ── Grant slide: logo + status row up top, then name/desc ── */
-            .grant-intro      { font-size: 60px; }
-
-            .grant-card {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 24px;
-                padding: 40px 44px;
-            }
-
-            .grant-card-left  { order: 2; }
-
-            .grant-card-right {
-                flex-direction: row !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                width: 100%;
-                order: 1;
-                padding-bottom: 30px;
-                border-bottom: 1px solid var(--light-gray);
-                text-align: left;
-                gap: 20px !important;
-            }
-
-            .grant-card-right img {
-                height: 120px !important;
-                max-width: 55%;
-            }
-
-            .grant-card-name  { font-size: 80px; }
-            .grant-card-desc  { font-size: 52px; }
-            .grant-amount     { font-size: 96px; }
-            .grant-status     { font-size: 40px; }
-
-            /* ── Floating character (slide 10) ── */
-            .floating-character-wrapper {
-                display: none;
-            }
-
-            /* ── Table ── */
-            .punk-table th { font-size: 56px; padding: 24px; }
-            .punk-table td { font-size: 48px; padding: 20px 24px; }
-
-            /* ── Slide 10 (Thank You): widen the 620px inner wrapper ── */
-            .case-file > div[style*="max-width: 620px"] {
-                max-width: 100% !important;
-            }
-            .case-file p[style*="max-width: 520px"] {
-                max-width: 100% !important;
-            }
-
-            .thankyou-big {
-                font-size: 280px !important;
-                margin-bottom: 40px !important;
-            }
-
-            /* Tagline "Built for couches. Crafted for chaos." — scoped to last slide */
-            .slide:last-of-type .case-file p[style*="font-size: 34px"] {
-                font-size: 92px !important;
-                margin-bottom: 30px !important;
-            }
-
-            /* CTA buttons (only appear on slide 10) */
-            .play-build-cta {
-                font-size: 64px !important;
-                padding: 28px 56px !important;
-                letter-spacing: 0.12em !important;
-            }
-
-            /* Contact labels (CO-FOUNDER / DEV) — last slide only */
-            .slide:last-of-type .case-file div[style*="font-size: 10px"] {
-                font-size: 40px !important;
-                margin-bottom: 14px !important;
-            }
-
-            /* Contact names (RAYNER BRANDON) — last slide only */
-            .slide:last-of-type .case-file div[style*="font-size: 22px"] {
-                font-size: 76px !important;
-            }
-
-            /* Footer paragraphs on slide 10 */
-            .slide:last-of-type .case-file p[style*="font-size: 13px"] {
-                font-size: 52px !important;
-            }
-            .slide:last-of-type .case-file p[style*="font-size: 11px"] {
-                font-size: 42px !important;
-            }
-
-            /* Slide 08 roadmap intro block — stack vertically */
-            .case-file > div[style*="max-width: 1100px"] {
-                flex-direction: column !important;
-                gap: 28px !important;
-            }
-            .case-file > div[style*="max-width: 1100px"] p {
-                text-align: left !important;
-            }
-            .case-file > div[style*="max-width: 1100px"] > div[style*="width: 1px"] {
-                display: none;
-            }
+            .video-label { bottom: 90px; left: 90px; }
         }
 
         @media print {
-            body { padding: 0; background: white; }
-            .slide {
-                page-break-after: always;
-                margin: 0 auto;
-                box-shadow: none;
-                border: none;
-            }
+            body { padding: 0; background: #fff; }
+            .slide { page-break-after: always; margin: 0 auto; }
         }
     </style>
+
 </head>
 <body>
 
-<!-- ═══════════════════════════════════ -->
-<!-- SLIDE 01: TITLE                     -->
-<!-- ═══════════════════════════════════ -->
-<div class="slide" style="text-align: center; justify-content: center;">
+<div class="slide wash-violet" style="text-align: center; justify-content: center;">
     <div class="slide-content" style="align-items: center;">
-        <div class="capsule-frame capsule-large" style="margin: 0 auto 40px;">
+        <div class="slap capsule-large" style="margin: 0 auto 40px;">
             <img src="images/game/PartyShips_Capsule.png" alt="Party Ships">
-            <div class="tape" style="top: -15px; right: 30px; transform: rotate(3deg);">LOCAL MULTIPLAYER</div>
-            <div class="tape" style="bottom: -15px; left: 30px; transform: rotate(-2deg);">2-4 PLAYERS</div>
         </div>
-        <p style="font-size: 18px; letter-spacing: 0.1em; color: var(--gray);">Local Multiplayer Arena Brawler &nbsp;|&nbsp; PC &nbsp;|&nbsp; Unity</p>
-        <div style="margin-top: 24px;">
-            <a href="https://drive.google.com/file/d/1tngKsTi7OMFBkAlIlTAyaiW9Fc0KSDNm/view?usp=sharing" class="play-build-cta" target="_blank">&#9654;&nbsp; Play the Build</a>
+        <p class="lead" style="letter-spacing: 0.1em; color: var(--gray);">Couch multiplayer arena brawler <span class="acid">/</span> PC <span class="acid">/</span> Unity</p>
+        <div style="margin-top: 26px;">
+            <a href="https://drive.google.com/file/d/1tngKsTi7OMFBkAlIlTAyaiW9Fc0KSDNm/view?usp=sharing" class="cta" target="_blank"><span>&#9654;&nbsp; Play the Build</span></a>
         </div>
     </div>
-    <div class="corner-logo">
-        <img src="images/logos/LIG logo.png" alt="Lil Indie Games">
-    </div>
-    <div class="file-number">FILE — 01 / 10</div>
+    <div class="corner-logo"><img src="images/logos/LIG logo.png" alt="Lil Indie Games"></div>
+    <div class="idx"><b>01</b> / 09</div>
 </div>
 
-<!-- ═══════════════════════════════════ -->
-<!-- SLIDE 02: GAMEPLAY VIDEO           -->
-<!-- ═══════════════════════════════════ -->
 <div class="slide video-slide">
     <div class="video-container">
         <video autoplay loop muted playsinline>
@@ -1605,666 +583,512 @@
         </video>
         <div class="video-overlay"></div>
         <div class="video-label">
-            <span class="label">// IN ACTION</span>
-            <h2 style="font-size: 52px; margin-bottom: 0;">PARTY SHIPS<br><span class="highlight">GAMEPLAY</span></h2>
+            <span class="label">IN ACTION</span>
+            <h2 style="font-size: 56px; margin-bottom: 0;">PARTY SHIPS<br><span class="hi">GAMEPLAY</span></h2>
         </div>
-        <div class="corner-logo" style="top: 30px; left: 40px;">
-            <img src="images/logos/LIG logo.png" alt="Lil Indie Games">
-        </div>
+        <div class="corner-logo"><img src="images/logos/LIG logo.png" alt="Lil Indie Games"></div>
     </div>
-    <div class="file-number" style="position: absolute; bottom: 22px; right: 40px;">FILE — 02 / 10</div>
+    <div class="idx" style="z-index: 5;"><b>02</b> / 09</div>
 </div>
 
-<!-- ═══════════════════════════════════ -->
-<!-- SLIDE 03: THE HOOK                 -->
-<!-- ═══════════════════════════════════ -->
-<div class="slide">
-    <div class="corner-logo">
-        <img src="images/logos/LIG logo.png" alt="Lil Indie Games">
-    </div>
+<div class="slide wash-pop">
+    <div class="corner-logo"><img src="images/logos/LIG logo.png" alt="Lil Indie Games"></div>
     <div class="slide-content">
-        <div class="folder-header">
-            <div class="folder-tab-divider"></div>
-            <div class="folder-tab">// THE PITCH</div>
-            <div class="folder-tab-divider"></div>
+        <div class="kicker k-pop"><span>THE PITCH</span></div>
+
+        <h2>BRAWL YOUR MATES WITH<br><span class="hi">SMART PLAYS</span> AND <span class="cy">DUMB ITEMS</span></h2>
+
+        <div class="quote">
+            The win goes to whoever <span class="acid">times it right</span>,<br>not whoever twitches fastest.
         </div>
-        <div class="case-file">
-            <h2>BRAWL YOUR MATES<br>WITH <span class="highlight">SMART PLAYS</span> AND <span class="highlight">STUPID ITEMS</span></h2>
 
-            <div class="quote">
-                "Victory goes to the player who times their abilities best, not always the one with the fastest reflexes."
+        <div class="pillar-grid">
+            <div class="pillar-box">
+                <h4>THE PROBLEM</h4>
+                <p>Party brawlers are either too twitchy for casuals or too random to feel fair. Nobody's happy.</p>
             </div>
-
-            <div class="pillar-grid">
-                <div class="pillar-box">
-                    <h4>THE PROBLEM</h4>
-                    <p>Party brawlers either require too much skill (alienating casuals) or are too random (frustrating everyone).</p>
-                </div>
-                <div class="pillar-box">
-                    <h4>OUR SOLUTION</h4>
-                    <p>Combat depth through item timing, not pure mechanical skill. Everyone can play. Smart plays win.</p>
-                </div>
+            <div class="pillar-box pb-cyan">
+                <h4>OUR ANSWER</h4>
+                <p>Depth comes from item timing, not reflexes. Anyone can pick up a pad. The smart player still wins.</p>
             </div>
-
-            <p style="font-size: 18px; margin-top: 20px; margin-bottom: 0; color: var(--gray);">
-                <strong style="color: var(--white);">Core Design:</strong> Items over aim. Readable action. Shareable moments. Zero friction pickup.
-            </p>
         </div>
+
+        <p style="font-size: 18px; margin-top: 18px; margin-bottom: 0; color: var(--gray);">
+            <span class="strong-w">The rule we design by:</span> items beat aim, action stays readable, and every round is worth clipping.
+        </p>
     </div>
-    <div class="file-number">FILE — 03 / 10</div>
+    <div class="idx"><b>03</b> / 09</div>
 </div>
 
-<!-- ═══════════════════════════════════ -->
-<!-- SLIDE 04: GAME OVERVIEW            -->
-<!-- ═══════════════════════════════════ -->
-<div class="slide">
-    <div class="corner-logo">
-        <img src="images/logos/LIG logo.png" alt="Lil Indie Games">
-    </div>
+<div class="slide wash-cyan">
+    <div class="corner-logo"><img src="images/logos/LIG logo.png" alt="Lil Indie Games"></div>
     <div class="slide-content">
-        <div class="folder-header">
-            <div class="folder-tab-divider"></div>
-            <div class="folder-tab tab-chaos">// THE GAME</div>
-            <div class="folder-tab-divider"></div>
-        </div>
-        <div class="case-file">
-            <div class="two-col" style="align-items: center;">
-                <div>
-                    <div style="font-size: 11px; letter-spacing: 0.25em; color: var(--chaos); margin-bottom: 14px;">// AT A GLANCE</div>
-                    <h2>ITEM-DRIVEN<br><span class="highlight">PARTY BRAWLER</span></h2>
+        <div class="kicker k-cyan"><span>THE GAME</span></div>
+        <div class="two-col" style="align-items: center;">
+            <div>
+                <div class="label" style="color: var(--cyan); letter-spacing: 0.25em;">AT A GLANCE</div>
+                <h2>ITEM-DRIVEN<br><span class="hi">PARTY BRAWLER</span></h2>
 
-                    <p style="font-size: 17px; color: var(--white); margin-top: 14px;">The <span style="color: var(--chaos); font-weight: 700;">quick-round</span> spaceship brawler where chaos comes from <span style="color: var(--pop); font-weight: 700;">choices</span>, and a little bit of luck.</p>
+                <p class="lead" style="margin-top: 14px;">A <span class="cy">fast-round</span> spaceship brawler where the wild stuff comes from <span class="hi">your choices</span>, plus a little luck.</p>
 
-                    <p style="margin-top: 10px;">Players pilot spacecraft through a wraparound arena, collecting and deploying <strong>30+ unique modules</strong> to outmaneuver and eliminate their friends.</p>
+                <p style="margin-top: 8px;">Fly through a wraparound arena, grab and fire <span class="strong-w">30+ modules</span>, and knock your friends out of the sky.</p>
 
-                    <ul class="feature-list">
-                        <li><strong>3 Module Slots</strong>: Strategic loadout choices</li>
-                        <li><strong>Screen Wrapping</strong>: Asteroids-style spatial play</li>
-                        <li><strong>One-Hit Kills</strong>: High stakes, fast respawns</li>
-                        <li><strong>Physics-Based</strong>: Satisfying drift and momentum</li>
-                        <li><strong>Pure Accessibility</strong>: No barriers, fun for everyone</li>
-                    </ul>
+                <ul class="feature-list">
+                    <li><span class="strong-w">3 module slots</span> so loadouts are a real choice</li>
+                    <li><span class="strong-w">Screen wrap</span> for Asteroids-style spatial play</li>
+                    <li><span class="strong-w">One-hit kills</span>, instant respawns, high stakes</li>
+                    <li><span class="strong-w">Physics-based</span> drift and momentum that feel great</li>
+                    <li><span class="strong-w">Pick up and play</span> with zero setup</li>
+                </ul>
 
-                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 22px; flex-wrap: wrap;">
-                        <div style="font-size: 10px; letter-spacing: 0.2em; color: var(--gray); margin-right: 4px;">CORE LOOP</div>
-                        <div style="padding: 8px 14px; border: 1px solid var(--pop); color: var(--pop); font-size: 12px; letter-spacing: 0.12em; font-weight: 700;">GRAB ITEMS</div>
-                        <span style="color: var(--chaos); font-size: 14px;">&rarr;</span>
-                        <div style="padding: 8px 14px; border: 1px solid var(--chaos); color: var(--chaos); font-size: 12px; letter-spacing: 0.12em; font-weight: 700;">FIGHT</div>
-                        <span style="color: var(--chaos); font-size: 14px;">&rarr;</span>
-                        <div style="padding: 8px 14px; border: 1px solid var(--white); color: var(--white); font-size: 12px; letter-spacing: 0.12em; font-weight: 700;">SURVIVE</div>
-                    </div>
+                <div class="loop">
+                    <div class="loop-label">CORE LOOP</div>
+                    <div class="chip">GRAB ITEMS</div>
+                    <span class="arw">&rarr;</span>
+                    <div class="chip c-cyan">FIGHT</div>
+                    <span class="arw">&rarr;</span>
+                    <div class="chip c-white">SURVIVE</div>
                 </div>
-                <div>
-                    <div class="capsule-frame capsule-medium" style="transform: rotate(1deg);">
-                        <video autoplay loop muted playsinline poster="images/game/Gameplay.webp">
-                            <source src="video/gameplay_video.mp4" type="video/mp4">
-                        </video>
-                        <div class="tape" style="top: -14px; right: 24px; transform: rotate(4deg);">GAMEPLAY / ALPHA</div>
+            </div>
+            <div>
+                <div class="slap capsule-medium">
+                    <video autoplay loop muted playsinline poster="images/game/Gameplay.webp">
+                        <source src="video/gameplay_video.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="stat-row" style="margin-top: 28px; gap: 40px; justify-content: center;">
+                    <div class="stat" style="align-items: center; text-align: center;">
+                        <div class="stat-number">30<span class="stat-unit">+</span></div>
+                        <div class="stat-label">UNIQUE MODULES</div>
                     </div>
-                    <div style="margin-top: 18px; font-size: 10px; letter-spacing: 0.2em; color: var(--gray); text-align: center;">
-                        &gt; LIVE CAPTURE · 4-PLAYER FREE-FOR-ALL · ALPHA BUILD
+                    <div style="width: 3px; background: var(--line); align-self: stretch;"></div>
+                    <div class="stat" style="align-items: center; text-align: center;">
+                        <div class="stat-number">90<span class="stat-unit">SEC</span></div>
+                        <div class="stat-label">AVG ROUND</div>
                     </div>
-                    <div class="stat-row" style="margin-top: 22px; gap: 40px; justify-content: center;">
-                        <div class="stat" style="align-items: center; text-align: center;">
-                            <div class="stat-number">30<span class="stat-unit">+</span></div>
-                            <div class="stat-label">UNIQUE MODULES</div>
-                        </div>
-                        <div style="width: 1px; background: var(--light-gray); align-self: stretch;"></div>
-                        <div class="stat" style="align-items: center; text-align: center;">
-                            <div class="stat-number">90<span class="stat-unit">SEC</span></div>
-                            <div class="stat-label">AVG ROUND</div>
-                        </div>
-                        <div style="width: 1px; background: var(--light-gray); align-self: stretch;"></div>
-                        <div class="stat" style="align-items: center; text-align: center;">
-                            <div class="stat-number">2<span class="stat-unit">-4</span></div>
-                            <div class="stat-label">PLAYERS</div>
-                        </div>
+                    <div style="width: 3px; background: var(--line); align-self: stretch;"></div>
+                    <div class="stat" style="align-items: center; text-align: center;">
+                        <div class="stat-number">2<span class="stat-unit">-4</span></div>
+                        <div class="stat-label">PLAYERS</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="file-number">FILE — 04 / 10</div>
+    <div class="idx"><b>04</b> / 09</div>
 </div>
 
-<!-- ═══════════════════════════════════ -->
-<!-- SLIDE 05: MODULES                  -->
-<!-- ═══════════════════════════════════ -->
 <div class="slide">
-    <div class="corner-logo">
-        <img src="images/logos/LIG logo.png" alt="Lil Indie Games">
-    </div>
+    <div class="corner-logo"><img src="images/logos/LIG logo.png" alt="Lil Indie Games"></div>
     <div class="slide-content">
-        <div class="folder-header">
-            <div class="folder-tab-divider"></div>
-            <div class="folder-tab">// GAMEPLAY DEPTH</div>
-            <div class="folder-tab-divider"></div>
-        </div>
-        <div class="case-file">
-            <h2>30<span style="color:var(--chaos);">+</span> MODULES, <span class="highlight">ENDLESS</span> COMBOS</h2>
+        <div class="kicker"><span>MODULES</span></div>
+        <h2>30<span class="hi">+</span> MODULES, <span class="cy">ENDLESS</span> COMBOS</h2>
 
-            <div class="two-col" style="gap: 40px; margin-top: 10px;">
-                <div>
-                    <h3 style="font-size: 22px; margin-bottom: 14px;">SAMPLE MODULES</h3>
-                    <div style="position: relative; padding-bottom: 40px;">
-                    <div class="item-slot-grid" id="moduleGrid">
-                        <div class="item-slot">
-                            <div class="item-inner">
-                                <img class="item-img" src="images/items/BlackHole.png" alt="">
-                                <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
-                            </div>
-                            <div class="item-slot-text">
-                                <div class="item-slot-name">BLACK HOLE</div>
-                                <div class="item-slot-desc">Sucks in all nearby objects</div>
-                            </div>
+        <div class="two-col" style="gap: 40px; margin-top: 10px;">
+            <div>
+                <h3 style="font-size: 46px; letter-spacing: 0.01em; margin-bottom: 20px; line-height: 0.95;">SAMPLE MODULES</h3>
+                <div style="position: relative; padding-bottom: 40px;">
+                <div class="item-slot-grid" id="moduleGrid">
+                    <div class="item-slot">
+                        <div class="item-inner">
+                            <img class="item-img" src="images/items/BlackHole.png" alt="">
+                            <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
                         </div>
-                        <div class="item-slot">
-                            <div class="item-inner">
-                                <img class="item-img" src="images/items/Boost.png" alt="">
-                                <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
-                            </div>
-                            <div class="item-slot-text">
-                                <div class="item-slot-name">COLA</div>
-                                <div class="item-slot-desc">Boost forward quickly</div>
-                            </div>
-                        </div>
-                        <div class="item-slot">
-                            <div class="item-inner">
-                                <img class="item-img" src="images/items/cheeze_block.png" alt="">
-                                <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
-                            </div>
-                            <div class="item-slot-text">
-                                <div class="item-slot-name">CHEESE</div>
-                                <div class="item-slot-desc">Deploy cheese wheel that sticks to objects</div>
-                            </div>
-                        </div>
-                        <div class="item-slot">
-                            <div class="item-inner">
-                                <img class="item-img" src="images/items/emp.png" alt="">
-                                <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
-                            </div>
-                            <div class="item-slot-text">
-                                <div class="item-slot-name">EMP</div>
-                                <div class="item-slot-desc">Jam enemy's items momentarily</div>
-                            </div>
-                        </div>
-                        <div class="item-slot">
-                            <div class="item-inner">
-                                <img class="item-img" src="images/items/slow_time.png" alt="">
-                                <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
-                            </div>
-                            <div class="item-slot-text">
-                                <div class="item-slot-name">CLOCK</div>
-                                <div class="item-slot-desc">Create a slow field</div>
-                            </div>
-                        </div>
-                        <div class="item-slot">
-                            <div class="item-inner">
-                                <img class="item-img" src="images/items/ducky.png" alt="">
-                                <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
-                            </div>
-                            <div class="item-slot-text">
-                                <div class="item-slot-name">DUCK</div>
-                                <div class="item-slot-desc">...what does the duck do?</div>
-                            </div>
-                        </div>
-                        <div class="item-slot">
-                            <div class="item-inner">
-                                <img class="item-img" src="images/items/Shield.png" alt="">
-                                <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
-                            </div>
-                            <div class="item-slot-text">
-                                <div class="item-slot-name">SHIELD</div>
-                                <div class="item-slot-desc">Protects from projectiles and melee damage</div>
-                            </div>
-                        </div>
-                        <div class="item-slot">
-                            <div class="item-inner">
-                                <img class="item-img" src="images/items/Teleport.png" alt="">
-                                <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
-                            </div>
-                            <div class="item-slot-text">
-                                <div class="item-slot-name">PORTAL</div>
-                                <div class="item-slot-desc">Drop portal, use again to teleport to it</div>
-                            </div>
+                        <div class="item-slot-text">
+                            <div class="item-slot-name">BLACK HOLE</div>
+                            <div class="item-slot-desc">Sucks in all nearby objects</div>
                         </div>
                     </div>
-                    <div style="position: absolute; bottom: 0; left: 0; display: flex; align-items: center; gap: 8px;">
-                        <svg class="countdown-ring" width="24" height="24" viewBox="0 0 36 36">
-                            <circle cx="18" cy="18" r="15" fill="none" stroke="var(--light-gray)" stroke-width="3"/>
-                            <circle id="countdownArc" cx="18" cy="18" r="15" fill="none" stroke="var(--chaos)" stroke-width="3" stroke-linecap="round" stroke-dasharray="94.25" stroke-dashoffset="0"/>
-                        </svg>
-                        <span style="font-size: 10px; color: var(--gray); letter-spacing: 0.1em;">CYCLING THROUGH 23 IN-DEVELOPMENT MODULES</span>
+                    <div class="item-slot">
+                        <div class="item-inner">
+                            <img class="item-img" src="images/items/Boost.png" alt="">
+                            <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
+                        </div>
+                        <div class="item-slot-text">
+                            <div class="item-slot-name">COLA</div>
+                            <div class="item-slot-desc">Boost forward quickly</div>
+                        </div>
                     </div>
+                    <div class="item-slot">
+                        <div class="item-inner">
+                            <img class="item-img" src="images/items/cheeze_block.png" alt="">
+                            <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
+                        </div>
+                        <div class="item-slot-text">
+                            <div class="item-slot-name">CHEESE</div>
+                            <div class="item-slot-desc">Deploy cheese wheel that sticks to objects</div>
+                        </div>
+                    </div>
+                    <div class="item-slot">
+                        <div class="item-inner">
+                            <img class="item-img" src="images/items/emp.png" alt="">
+                            <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
+                        </div>
+                        <div class="item-slot-text">
+                            <div class="item-slot-name">EMP</div>
+                            <div class="item-slot-desc">Jam enemy's items momentarily</div>
+                        </div>
+                    </div>
+                    <div class="item-slot">
+                        <div class="item-inner">
+                            <img class="item-img" src="images/items/slow_time.png" alt="">
+                            <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
+                        </div>
+                        <div class="item-slot-text">
+                            <div class="item-slot-name">CLOCK</div>
+                            <div class="item-slot-desc">Create a slow field</div>
+                        </div>
+                    </div>
+                    <div class="item-slot">
+                        <div class="item-inner">
+                            <img class="item-img" src="images/items/ducky.png" alt="">
+                            <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
+                        </div>
+                        <div class="item-slot-text">
+                            <div class="item-slot-name">DUCK</div>
+                            <div class="item-slot-desc">...what does the duck do?</div>
+                        </div>
+                    </div>
+                    <div class="item-slot">
+                        <div class="item-inner">
+                            <img class="item-img" src="images/items/Shield.png" alt="">
+                            <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
+                        </div>
+                        <div class="item-slot-text">
+                            <div class="item-slot-name">SHIELD</div>
+                            <div class="item-slot-desc">Protects from projectiles and melee damage</div>
+                        </div>
+                    </div>
+                    <div class="item-slot">
+                        <div class="item-inner">
+                            <img class="item-img" src="images/items/Teleport.png" alt="">
+                            <img class="item-bubble-overlay" src="images/items/item_bubble.png" alt="">
+                        </div>
+                        <div class="item-slot-text">
+                            <div class="item-slot-name">PORTAL</div>
+                            <div class="item-slot-desc">Drop portal, use again to teleport to it</div>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <h3 style="font-size: 22px; margin-bottom: 4px;">EMERGENT COMBOS</h3>
-                    <div id="playStyleLabel" style="font-size: 10px; letter-spacing: 0.2em; color: var(--chaos); margin-bottom: 12px; transition: opacity 0.4s ease;">PLAY STYLE: ASSASSIN</div>
-                    <div id="comboList" style="transition: opacity 0.4s ease;">
-                        <div class="combo-box">
-                            <div class="combo-title">ANCHOR + RAILGUN</div>
-                            <div class="combo-desc">Plant yourself still, devastate with long range railgun</div>
-                        </div>
-                        <div class="combo-box">
-                            <div class="combo-title">EMP + MISSILE</div>
-                            <div class="combo-desc">Disable their items, homing missile hunts them down</div>
-                        </div>
-                        <div class="combo-box">
-                            <div class="combo-title">ICE CREAM + LASER</div>
-                            <div class="combo-desc">Freeze target solid, precise follow-up shot while frozen</div>
-                        </div>
-                        <div class="combo-box">
-                            <div class="combo-title">MAGNET + BOMB</div>
-                            <div class="combo-desc">Pull them close, detonate at point blank range</div>
-                        </div>
-                        <div class="combo-box">
-                            <div class="combo-title">RAILGUN + MISSILE</div>
-                            <div class="combo-desc">Long range opener, missile hunts any evasive targets</div>
-                        </div>
-                    </div>
-                    <p style="font-size: 13px; color: var(--gray); margin-top: 16px; margin-bottom: 0;">
-                        <span class="highlight">Every module</span> is designed to interact with every other. With 23 in development, the combo space only grows.
-                    </p>
+                <div style="position: absolute; bottom: 0; left: 0; display: flex; align-items: center; gap: 8px;">
+                    <svg class="countdown-ring" width="24" height="24" viewBox="0 0 36 36">
+                        <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(22,19,15,0.2)" stroke-width="3"/>
+                        <circle id="countdownArc" cx="18" cy="18" r="15" fill="none" stroke="var(--cyan)" stroke-width="3" stroke-linecap="round" stroke-dasharray="94.25" stroke-dashoffset="0"/>
+                    </svg>
+                    <span style="font-size: 10px; color: var(--gray); letter-spacing: 0.1em;">CYCLING THROUGH 23 MORE MODULES IN DEVELOPMENT</span>
                 </div>
+                </div>
+            </div>
+            <div>
+                <h3 style="font-size: 46px; letter-spacing: 0.01em; margin-bottom: 16px; line-height: 0.95;">EMERGENT COMBOS</h3>
+                <div id="playStyleLabel" style="display: none;">PLAY STYLE: ASSASSIN</div>
+                <div id="comboList" style="transition: opacity 0.4s ease;">
+                    <div class="combo-box">
+                        <div class="combo-title">ANCHOR + RAILGUN</div>
+                        <div class="combo-desc">Plant yourself still, devastate with long range railgun</div>
+                    </div>
+                    <div class="combo-box">
+                        <div class="combo-title">EMP + MISSILE</div>
+                        <div class="combo-desc">Disable their items, homing missile hunts them down</div>
+                    </div>
+                    <div class="combo-box">
+                        <div class="combo-title">ICE CREAM + LASER</div>
+                        <div class="combo-desc">Freeze target solid, precise follow-up shot while frozen</div>
+                    </div>
+                    <div class="combo-box">
+                        <div class="combo-title">MAGNET + BOMB</div>
+                        <div class="combo-desc">Pull them close, detonate at point blank range</div>
+                    </div>
+                    <div class="combo-box">
+                        <div class="combo-title">RAILGUN + MISSILE</div>
+                        <div class="combo-desc">Long range opener, missile hunts any evasive targets</div>
+                    </div>
+                </div>
+                <p style="font-size: 13px; color: var(--gray); margin-top: 16px; margin-bottom: 0;">
+                    <span class="hi">Every module</span> is built to react with every other one. With 23 more in development, the combo space keeps growing.
+                </p>
             </div>
         </div>
     </div>
-    <div class="file-number">FILE — 05 / 10</div>
+    <div class="idx"><b>05</b> / 09</div>
 </div>
 
-<!-- ═══════════════════════════════════ -->
-<!-- SLIDE 06: MARKET & AUDIENCE        -->
-<!-- ═══════════════════════════════════ -->
-<div class="slide">
-    <div class="corner-logo">
-        <img src="images/logos/LIG logo.png" alt="Lil Indie Games">
-    </div>
+<div class="slide wash-cyan">
+    <div class="corner-logo"><img src="images/logos/LIG logo.png" alt="Lil Indie Games"></div>
     <div class="slide-content">
-        <div class="folder-header">
-            <div class="folder-tab-divider"></div>
-            <div class="folder-tab tab-chaos">// MARKET &amp; AUDIENCE</div>
-            <div class="folder-tab-divider"></div>
-        </div>
-        <div class="case-file">
-            <h2 style="margin-bottom: 6px;">PROVEN <span class="highlight">DEMAND</span></h2>
-            <p style="font-size: 15px; color: var(--gray); margin-bottom: 16px;">
-                <strong style="color: var(--white);">Party Ships</strong> sits in a proven <span class="highlight">local multiplayer</span> market, with a fresh take on mechanics from <span class="chaos-text">party brawlers</span> and <span class="chaos-text">arena games</span>.
-            </p>
+        <div class="kicker k-cyan"><span>MARKET</span></div>
+        <h2 style="margin-bottom: 6px;">THE DEMAND IS <span class="hi">ALREADY THERE</span></h2>
+        <p style="font-size: 15px; color: var(--gray); margin-bottom: 16px;">
+            <span class="strong-w">Party Ships</span> lands in a proven <span class="hi">couch multiplayer</span> lane, borrowing the best of <span class="cy">party brawlers</span> and <span class="cy">arena shooters</span> with a fresh twist.
+        </p>
 
-            <div class="market-grid">
-                <!-- Row 1 -->
-                <div class="market-card">
-                    <img src="images/references/BoplBattle_reference.jpg" alt="Bopl Battle" class="market-card-img">
-                    <div class="market-card-stats">
-                        <table>
-                            <tr><td>Release</td><td>Nov 2023</td></tr>
-                            <tr><td>Reviews</td><td>33,000+</td></tr>
-                            <tr><td>Est. Steam Sales*</td><td class="stat-highlight">1,500,000</td></tr>
-                            <tr><td>Price</td><td>$5.99</td></tr>
-                            <tr><td>Our Angle</td><td>More strategic depth</td></tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="market-card">
-                    <img src="images/references/StickFight_reference.jpg" alt="Stick Fight" class="market-card-img">
-                    <div class="market-card-stats">
-                        <table>
-                            <tr><td>Release</td><td>Sep 2017</td></tr>
-                            <tr><td>Reviews</td><td>78,000+</td></tr>
-                            <tr><td>Est. Steam Sales*</td><td class="stat-highlight">3,500,000</td></tr>
-                            <tr><td>Price</td><td>$4.99</td></tr>
-                            <tr><td>Our Angle</td><td>More readable action</td></tr>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Row 2 -->
-                <div class="market-card">
-                    <img src="images/references/GangBeasts_reference.jpg" alt="Gang Beasts" class="market-card-img">
-                    <div class="market-card-stats">
-                        <table>
-                            <tr><td>Early Access</td><td>Dec 2014</td></tr>
-                            <tr><td>Reviews</td><td>65,000+</td></tr>
-                            <tr><td>Est. Steam Sales*</td><td class="stat-highlight">3,000,000</td></tr>
-                            <tr><td>Price</td><td>$19.99</td></tr>
-                            <tr><td>Our Angle</td><td>Item-driven strategy</td></tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="market-card">
-                    <img src="images/references/Towerfall_reference.png" alt="TowerFall" class="market-card-img">
-                    <div class="market-card-stats">
-                        <table>
-                            <tr><td>Release</td><td>Sep 2014</td></tr>
-                            <tr><td>Reviews</td><td>7,800+</td></tr>
-                            <tr><td>Est. Steam Sales*</td><td class="stat-highlight">350,000</td></tr>
-                            <tr><td>Price</td><td>$14.99</td></tr>
-                            <tr><td>Our Angle</td><td>Chaotic item systems</td></tr>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Row 3 -->
-                <div class="market-card">
-                    <img src="images/references/BoomerangFu_reference.jpg" alt="Boomerang Fu" class="market-card-img">
-                    <div class="market-card-stats">
-                        <table>
-                            <tr><td>Release</td><td>Aug 2020</td></tr>
-                            <tr><td>Reviews</td><td>3,400+</td></tr>
-                            <tr><td>Est. Steam Sales*</td><td class="stat-highlight">150,000</td></tr>
-                            <tr><td>Price</td><td>$14.99</td></tr>
-                            <tr><td>Our Angle</td><td>Deeper loadout systems</td></tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="market-card">
-                    <img src="images/references/UltimateChickenHorse_reference.jpg" alt="Ultimate Chicken Horse" class="market-card-img">
-                    <div class="market-card-stats">
-                        <table>
-                            <tr><td>Release</td><td>Mar 2016</td></tr>
-                            <tr><td>Reviews</td><td>27,000+</td></tr>
-                            <tr><td>Est. Steam Sales*</td><td class="stat-highlight">1,200,000</td></tr>
-                            <tr><td>Price</td><td>$14.99</td></tr>
-                            <tr><td>Our Angle</td><td>Pure versus, no building</td></tr>
-                        </table>
-                    </div>
-                </div>
-
+        <div class="market-grid">
+            <div class="market-card">
+                <img src="images/references/BoplBattle_reference.jpg" alt="Bopl Battle" class="market-card-img">
+                <div class="market-card-stats"><table>
+                    <tr><td>Release</td><td>Nov 2023</td></tr>
+                    <tr><td>Reviews</td><td>33,000+</td></tr>
+                    <tr><td>Est. Steam Sales*</td><td class="stat-highlight">1,500,000</td></tr>
+                    <tr><td>Price</td><td>$5.99</td></tr>
+                    <tr><td>Our Angle</td><td>More strategic depth</td></tr>
+                </table></div>
             </div>
-
-            <p style="font-size: 10px; color: var(--gray); margin-top: 12px; margin-bottom: 0; opacity: 0.6; letter-spacing: 0.05em;">
-                *Sales estimated (reviews &times; 45) using <span style="color: var(--chaos);">Birkett's method</span>. Sources: SteamSpy, Gamalytic.
-            </p>
+            <div class="market-card">
+                <img src="images/references/StickFight_reference.jpg" alt="Stick Fight" class="market-card-img">
+                <div class="market-card-stats"><table>
+                    <tr><td>Release</td><td>Sep 2017</td></tr>
+                    <tr><td>Reviews</td><td>78,000+</td></tr>
+                    <tr><td>Est. Steam Sales*</td><td class="stat-highlight">3,500,000</td></tr>
+                    <tr><td>Price</td><td>$4.99</td></tr>
+                    <tr><td>Our Angle</td><td>More readable action</td></tr>
+                </table></div>
+            </div>
+            <div class="market-card">
+                <img src="images/references/GangBeasts_reference.jpg" alt="Gang Beasts" class="market-card-img">
+                <div class="market-card-stats"><table>
+                    <tr><td>Early Access</td><td>Dec 2014</td></tr>
+                    <tr><td>Reviews</td><td>65,000+</td></tr>
+                    <tr><td>Est. Steam Sales*</td><td class="stat-highlight">3,000,000</td></tr>
+                    <tr><td>Price</td><td>$19.99</td></tr>
+                    <tr><td>Our Angle</td><td>Item-driven strategy</td></tr>
+                </table></div>
+            </div>
+            <div class="market-card">
+                <img src="images/references/Towerfall_reference.png" alt="TowerFall" class="market-card-img">
+                <div class="market-card-stats"><table>
+                    <tr><td>Release</td><td>Sep 2014</td></tr>
+                    <tr><td>Reviews</td><td>7,800+</td></tr>
+                    <tr><td>Est. Steam Sales*</td><td class="stat-highlight">350,000</td></tr>
+                    <tr><td>Price</td><td>$14.99</td></tr>
+                    <tr><td>Our Angle</td><td>Chaotic item systems</td></tr>
+                </table></div>
+            </div>
+            <div class="market-card">
+                <img src="images/references/BoomerangFu_reference.jpg" alt="Boomerang Fu" class="market-card-img">
+                <div class="market-card-stats"><table>
+                    <tr><td>Release</td><td>Aug 2020</td></tr>
+                    <tr><td>Reviews</td><td>3,400+</td></tr>
+                    <tr><td>Est. Steam Sales*</td><td class="stat-highlight">150,000</td></tr>
+                    <tr><td>Price</td><td>$14.99</td></tr>
+                    <tr><td>Our Angle</td><td>Deeper loadout systems</td></tr>
+                </table></div>
+            </div>
+            <div class="market-card">
+                <img src="images/references/UltimateChickenHorse_reference.jpg" alt="Ultimate Chicken Horse" class="market-card-img">
+                <div class="market-card-stats"><table>
+                    <tr><td>Release</td><td>Mar 2016</td></tr>
+                    <tr><td>Reviews</td><td>27,000+</td></tr>
+                    <tr><td>Est. Steam Sales*</td><td class="stat-highlight">1,200,000</td></tr>
+                    <tr><td>Price</td><td>$14.99</td></tr>
+                    <tr><td>Our Angle</td><td>Pure versus, no building</td></tr>
+                </table></div>
+            </div>
         </div>
+
+        <p style="font-size: 10px; color: var(--gray); margin-top: 12px; margin-bottom: 0; opacity: 0.6; letter-spacing: 0.05em;">
+            *Sales estimated (reviews &times; 45) using <span class="cy">Birkett's method</span>. Sources: SteamSpy, Gamalytic.
+        </p>
     </div>
-    <div class="file-number">FILE — 06 / 10</div>
+    <div class="idx"><b>06</b> / 09</div>
 </div>
 
-<!-- ═══════════════════════════════════ -->
-<!-- SLIDE 07: TEAM                     -->
-<!-- ═══════════════════════════════════ -->
-<div class="slide">
-    <div class="corner-logo">
-        <img src="images/logos/LIG logo.png" alt="Lil Indie Games">
-    </div>
+<div class="slide wash-violet">
+    <div class="corner-logo"><img src="images/logos/LIG logo.png" alt="Lil Indie Games"></div>
     <div class="slide-content">
-        <div class="folder-header">
-            <div class="folder-tab-divider"></div>
-            <div class="folder-tab">// THE TEAM</div>
-            <div class="folder-tab-divider"></div>
+        <div class="kicker k-violet"><span>THE TEAM</span></div>
+        <h2 style="margin-bottom: 18px;">LIL INDIE <span class="hi">GAMES</span></h2>
+
+        <div class="company-bio">
+            <p>An independent Australian studio run by two brothers. We build games about the moments you have to show a mate. Self-funded from first sketch to playable alpha, moving fast and obsessing over feel. Party Ships is our first title.</p>
         </div>
-        <div class="case-file">
-            <h2 style="margin-bottom: 18px;">LIL INDIE <span class="highlight">GAMES</span></h2>
 
-            <div class="company-bio">
-                <p>Lil Indie Games is an independent Australian studio founded by two brothers. We build games that prioritise fun, accessibility, and those moments you just <em>have</em> to show your friends. Self-funded from concept to playable alpha. We move fast and obsess over feel. Party Ships is our debut title.</p>
-            </div>
-
-            <div class="team-grid">
-                <div class="team-card">
-                    <img src="images/team/Portrait_Rayner.jpg" alt="Rayner Brandon" style="width:320px; min-height:240px; object-fit:cover; object-position:top; flex-shrink:0; border-right:2px solid var(--pop); display:block;">
-                    <div class="team-card-body">
-                        <div class="team-name">RAYNER BRANDON</div>
-                        <div class="team-role">// CO-FOUNDER / GAME DESIGN &amp; DEVELOPMENT</div>
-                        <p class="team-bio">Software developer and Unity programmer responsible for all technical development on Party Ships. Rayner has built every system from scratch (physics, combat, UI, and tooling), taking the game from idea to a polished, playable product through self-funded development.</p>
-                    </div>
-                </div>
-                <div class="team-card">
-                    <img src="images/team/Portrait_Josh.jpg" alt="Josh Brandon" style="width:320px; min-height:240px; object-fit:cover; object-position:top; flex-shrink:0; border-right:2px solid var(--pop); display:block;">
-                    <div class="team-card-body">
-                        <div class="team-name">JOSH BRANDON</div>
-                        <div class="team-role">// CO-FOUNDER / ART &amp; DESIGN</div>
-                        <p class="team-bio">2D game artist responsible for all visual design on Party Ships, covering character illustration, UI art, and concept work. Josh brings a sharp eye for style and readability, crafting assets that are immediately fun to look at and easy to read in the chaos of a match.</p>
-                    </div>
+        <div class="team-grid">
+            <div class="team-card">
+                <img src="images/team/Portrait_Rayner.jpg" alt="Rayner Brandon" style="width:320px; min-height:240px; object-fit:cover; object-position:top; flex-shrink:0; display:block;">
+                <div class="team-card-body">
+                    <div class="team-name">RAYNER BRANDON</div>
+                    <div class="team-role">CO-FOUNDER / DESIGN &amp; ENGINEERING</div>
+                    <p class="team-bio">Unity programmer behind every system in Party Ships. Built the physics, combat, UI, and tooling from scratch, taking the game from idea to a polished, playable product on a self-funded budget.</p>
                 </div>
             </div>
+            <div class="team-card">
+                <img src="images/team/Portrait_Josh.jpg" alt="Josh Brandon" style="width:320px; min-height:240px; object-fit:cover; object-position:top; flex-shrink:0; display:block;">
+                <div class="team-card-body">
+                    <div class="team-name">JOSH BRANDON</div>
+                    <div class="team-role">CO-FOUNDER / ART &amp; DESIGN</div>
+                    <p class="team-bio">2D artist on all visual design: character illustration, UI, and concept work. Josh has a sharp eye for style and readability, so every asset reads instantly even in a four-player scramble.</p>
+                </div>
+            </div>
+        </div>
 
-            <div class="pillar-grid" style="margin-top: 20px; margin-bottom: 0;">
-                <div class="pillar-box">
-                    <h4>WHAT WE BRING</h4>
-                    <p>A two-person team covering the full stack: programming, design, and art all in-house. No outsourcing, no dependencies. Self-funded from zero to a validated, playable product.</p>
-                </div>
-                <div class="pillar-box">
-                    <h4>WHY WE'LL DELIVER</h4>
-                    <p>Core game is already built and playable. We're not pitching an idea. We're pitching a working product that needs polish.</p>
-                </div>
+        <div class="pillar-grid" style="margin-top: 20px; margin-bottom: 0;">
+            <div class="pillar-box pb-acid">
+                <h4>WHAT WE BRING</h4>
+                <p>Two people covering the full stack: code, design, and art in-house. No outsourcing. Self-funded from zero to a playable product.</p>
+            </div>
+            <div class="pillar-box pb-cyan">
+                <h4>WHY WE DELIVER</h4>
+                <p>The game already runs. We're not pitching an idea on a slide, we're pitching a working build that needs polish.</p>
             </div>
         </div>
     </div>
-    <div class="file-number">FILE — 07 / 10</div>
+    <div class="idx"><b>07</b> / 09</div>
 </div>
 
-<!-- ═══════════════════════════════════ -->
-<!-- SLIDE 08: STATUS & ROADMAP         -->
-<!-- ═══════════════════════════════════ -->
 <div class="slide">
-    <div class="corner-logo">
-        <img src="images/logos/LIG logo.png" alt="Lil Indie Games">
-    </div>
+    <div class="corner-logo"><img src="images/logos/LIG logo.png" alt="Lil Indie Games"></div>
     <div class="slide-content" style="justify-content: flex-start;">
-        <div class="folder-header">
-            <div class="folder-tab-divider"></div>
-            <div class="folder-tab tab-chaos">// STATUS &amp; ROADMAP</div>
-            <div class="folder-tab-divider"></div>
-        </div>
-        <div class="case-file" style="padding: 30px 40px;">
-            <h2 style="text-align: center; margin-bottom: 20px;">DEVELOPMENT <span class="highlight">PROGRESS</span></h2>
+        <div class="kicker k-cyan"><span>ROADMAP</span></div>
+        <h2 style="text-align: center; margin-bottom: 20px;">WHERE WE <span class="hi">ARE</span></h2>
 
-            <div style="display: flex; align-items: stretch; justify-content: center; gap: 40px; max-width: 1100px; margin: 0 auto 36px;">
-                <p style="flex: 1; font-size: 15px; color: var(--gray); line-height: 1.6; margin: 0; text-align: right;">
-                    Core loop is <span style="color: var(--white); font-weight: 700;">locked and playable</span>. Production is now expanding content: new modes, original audio, and polish for Next Fest.
-                </p>
-                <div style="width: 1px; background: linear-gradient(to bottom, transparent, var(--chaos), transparent); flex-shrink: 0;"></div>
-                <p style="flex: 1; font-size: 15px; color: var(--gray); line-height: 1.6; margin: 0;">
-                    Demo Showcase delivered with <span style="color: var(--white); font-weight: 700;">positive player validation</span>. The foundation is built. Funding secures the runway to a strong Next Fest demo and a clean path to launch.
-                </p>
-            </div>
-
-            <div class="roadmap-row">
-                <div class="roadmap-stage stage-complete">
-                    <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
-                    <div class="roadmap-date">COMPLETE</div>
-                    <div class="roadmap-title">PROTOTYPE</div>
-                    <ul class="roadmap-notes">
-                        <li>Core idea validated</li>
-                        <li>Playable vertical slice</li>
-                    </ul>
-                </div>
-                <div class="roadmap-stage stage-complete">
-                    <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
-                    <div class="roadmap-date">COMPLETE</div>
-                    <div class="roadmap-title">CORE GAMEPLAY</div>
-                    <ul class="roadmap-notes">
-                        <li>Combat &amp; movement</li>
-                        <li>Screen-wrap, respawns</li>
-                        <li>Physics feel locked</li>
-                    </ul>
-                </div>
-                <div class="roadmap-stage stage-complete">
-                    <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
-                    <div class="roadmap-date">COMPLETE</div>
-                    <div class="roadmap-title">DEMO SHOWCASE</div>
-                    <ul class="roadmap-notes">
-                        <li>Public showcase delivered</li>
-                        <li>Validated with real players</li>
-                        <li>Positive casual &amp; competitive feedback</li>
-                    </ul>
-                </div>
-                <div class="roadmap-stage stage-active">
-                    <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
-                    <div class="roadmap-date">IN PROGRESS</div>
-                    <div class="roadmap-title">NEW MODES + AUDIO</div>
-                    <ul class="roadmap-notes">
-                        <li>Classic &amp; Battle near complete</li>
-                        <li>Teams, Soccer &amp; Custom to build</li>
-                        <li>5-track OST &amp; SFX for 30+ items</li>
-                    </ul>
-                </div>
-                <div class="roadmap-stage stage-future">
-                    <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
-                    <div class="roadmap-date">Q4 2026</div>
-                    <div class="roadmap-title">QA &amp; POLISH</div>
-                    <ul class="roadmap-notes">
-                        <li>VFX pass &amp; UI refinement</li>
-                        <li>Accessibility features</li>
-                        <li>Balance tuning across modes</li>
-                    </ul>
-                </div>
-                <div class="roadmap-stage stage-future">
-                    <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
-                    <div class="roadmap-date">Q1 2027</div>
-                    <div class="roadmap-title">NEXT FEST DEMO</div>
-                    <ul class="roadmap-notes">
-                        <li>Steam store page live</li>
-                        <li>Wishlist campaign</li>
-                        <li>Press &amp; streamer outreach</li>
-                    </ul>
-                </div>
-                <div class="roadmap-stage stage-future">
-                    <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
-                    <div class="roadmap-date">Q4 2027 — TENTATIVE</div>
-                    <div class="roadmap-title">RELEASE</div>
-                    <ul class="roadmap-notes">
-                        <li>Implement feedback from Next Fest</li>
-                        <li>Respond to audience &amp; community</li>
-                        <li>All maps &amp; arenas ready</li>
-                        <li>Steam launch</li>
-                    </ul>
-                </div>
-                <div class="roadmap-stage stage-future" style="opacity: 0.55;">
-                    <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
-                    <div class="roadmap-date">FUTURE</div>
-                    <div class="roadmap-title">BEYOND LAUNCH</div>
-                    <ul class="roadmap-notes">
-                        <li>Console porting</li>
-                        <li>Localisation</li>
-                        <li>DLC &amp; additional content</li>
-                        <li>Platform expansion</li>
-                    </ul>
-                </div>
-            </div>
-
-            <p style="text-align: center; font-size: 13px; color: var(--gray); margin: 36px auto 0; max-width: 900px; line-height: 1.6;">
-                <span style="color: var(--white);">Unity 6.3 LTS · PC primary (Steam) · 120 FPS · Full controller support</span>
-                &nbsp;&nbsp;|&nbsp;&nbsp;
-                Open to discussing alternate release strategies with publishing partners.
+        <div style="display: flex; align-items: stretch; justify-content: center; gap: 40px; max-width: 1100px; margin: 0 auto 36px;">
+            <p style="flex: 1; font-size: 15px; color: var(--gray); line-height: 1.6; margin: 0; text-align: right;">
+                The core loop is <span class="strong-w">locked and playable</span>. We're now building content out: new modes, original audio, and a polish pass for Next Fest.
+            </p>
+            <div style="width: 2px; background: linear-gradient(to bottom, transparent, var(--cyan), transparent); flex-shrink: 0;"></div>
+            <p style="flex: 1; font-size: 15px; color: var(--gray); line-height: 1.6; margin: 0;">
+                Our public showcase landed with <span class="strong-w">real player validation</span>. The foundation is done. Funding buys the runway to a strong Next Fest demo and a clean run at launch.
             </p>
         </div>
-    </div>
-    <div class="file-number">FILE — 08 / 10</div>
-</div>
 
-<!-- ═══════════════════════════════════ -->
-<!-- SLIDE 09: GRANT OPPORTUNITIES      -->
-<!-- ═══════════════════════════════════ -->
-<div class="slide">
-    <div class="corner-logo">
-        <img src="images/logos/LIG logo.png" alt="Lil Indie Games">
-    </div>
-    <div class="slide-content">
-        <div class="folder-header">
-            <div class="folder-tab-divider"></div>
-            <div class="folder-tab">// FUNDING</div>
-            <div class="folder-tab-divider"></div>
-        </div>
-        <div class="case-file">
-            <h2><span class="highlight">GRANT</span> OPPORTUNITIES</h2>
-
-            <p class="grant-intro">We are actively pursuing Australian screen funding to accelerate development and take Party Ships from playable alpha to a polished commercial release.</p>
-
-            <div class="grant-list">
-                <div class="grant-card">
-                    <div class="grant-card-left">
-                        <div class="grant-card-name">Games Production Fund</div>
-                        <div class="grant-card-desc">Screen Australia · <a href="https://www.screenaustralia.gov.au/fund/games-production-fund/" style="color:var(--chaos);text-decoration:none;">screenaustralia.gov.au</a> · Supports Australian studios producing original commercial IP · Funds production from alpha to release-ready build</div>
-                    </div>
-                    <div class="grant-card-right" style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
-                        <img src="images/logos/logo_screenaustralia.png" alt="Screen Australia" style="height:64px;opacity:0.85;filter:brightness(0) invert(1);object-fit:contain;">
-                        <div class="grant-amount" style="color: var(--chaos);">APPLIED</div>
-                        <div class="grant-status">STATUS: UNDER REVIEW</div>
-                    </div>
-                </div>
-                <div class="grant-card">
-                    <div class="grant-card-left">
-                        <div class="grant-card-name">Victorian Production Fund</div>
-                        <div class="grant-card-desc">VicScreen · <a href="https://vicscreen.vic.gov.au/funding/games" style="color:var(--chaos);text-decoration:none;">vicscreen.vic.gov.au</a> · Victorian screen funding for original game IP · Screen Australia support strengthens this application as matched co-investment</div>
-                    </div>
-                    <div class="grant-card-right" style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
-                        <img src="images/logos/logo_vicscreen.png" alt="VicScreen" style="height:64px;opacity:0.85;filter:brightness(0) invert(1);object-fit:contain;">
-                        <div class="grant-amount">NEXT</div>
-                        <div class="grant-status">STATUS: IN PREPARATION</div>
-                    </div>
-                </div>
+        <div class="roadmap-row">
+            <div class="roadmap-stage stage-complete">
+                <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
+                <div class="roadmap-date">DONE</div>
+                <div class="roadmap-title">PROTOTYPE</div>
+                <ul class="roadmap-notes">
+                    <li>Core idea validated</li>
+                    <li>Playable vertical slice</li>
+                </ul>
             </div>
-
-            <p style="font-size: 13px; color: var(--gray); margin-top: 24px; margin-bottom: 0; opacity: 0.7;">
-                <span style="color: var(--chaos);">Screen Australia</span> validation serves as matched investment for the VicScreen application, so each grant de-risks the next. A successful outcome funds art polish, audio, additional arenas, and Steam launch.
-            </p>
+            <div class="roadmap-stage stage-complete">
+                <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
+                <div class="roadmap-date">DONE</div>
+                <div class="roadmap-title">CORE GAMEPLAY</div>
+                <ul class="roadmap-notes">
+                    <li>Combat &amp; movement</li>
+                    <li>Screen-wrap, respawns</li>
+                    <li>Physics feel locked</li>
+                </ul>
+            </div>
+            <div class="roadmap-stage stage-complete">
+                <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
+                <div class="roadmap-date">DONE</div>
+                <div class="roadmap-title">SHOWCASE</div>
+                <ul class="roadmap-notes">
+                    <li>Public showcase delivered</li>
+                    <li>Tested with real players</li>
+                    <li>Casual &amp; competitive both bit</li>
+                </ul>
+            </div>
+            <div class="roadmap-stage stage-active">
+                <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
+                <div class="roadmap-date">NOW</div>
+                <div class="roadmap-title">MODES + AUDIO</div>
+                <ul class="roadmap-notes">
+                    <li>Classic &amp; Battle near done</li>
+                    <li>Teams, Soccer &amp; Custom to build</li>
+                    <li>5-track OST &amp; SFX for 30+ items</li>
+                </ul>
+            </div>
+            <div class="roadmap-stage stage-future">
+                <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
+                <div class="roadmap-date">Q4 2026</div>
+                <div class="roadmap-title">QA &amp; POLISH</div>
+                <ul class="roadmap-notes">
+                    <li>VFX pass &amp; UI refinement</li>
+                    <li>Accessibility features</li>
+                    <li>Balance tuning across modes</li>
+                </ul>
+            </div>
+            <div class="roadmap-stage stage-future">
+                <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
+                <div class="roadmap-date">Q1 2027</div>
+                <div class="roadmap-title">NEXT FEST</div>
+                <ul class="roadmap-notes">
+                    <li>Steam store page live</li>
+                    <li>Wishlist campaign</li>
+                    <li>Press &amp; streamer outreach</li>
+                </ul>
+            </div>
+            <div class="roadmap-stage stage-future">
+                <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
+                <div class="roadmap-date">Q4 2027 (TBC)</div>
+                <div class="roadmap-title">RELEASE</div>
+                <ul class="roadmap-notes">
+                    <li>Fold in Next Fest feedback</li>
+                    <li>Respond to the community</li>
+                    <li>All maps &amp; arenas ready</li>
+                    <li>Steam launch</li>
+                </ul>
+            </div>
+            <div class="roadmap-stage stage-future" style="opacity: 0.55;">
+                <div class="roadmap-ring"><div class="roadmap-ring-inner"></div></div>
+                <div class="roadmap-date">LATER</div>
+                <div class="roadmap-title">BEYOND</div>
+                <ul class="roadmap-notes">
+                    <li>Console ports</li>
+                    <li>Localisation</li>
+                    <li>DLC &amp; extra content</li>
+                    <li>Platform expansion</li>
+                </ul>
+            </div>
         </div>
+
+        <p style="text-align: center; font-size: 13px; color: var(--gray); margin: 36px auto 0; max-width: 900px; line-height: 1.6;">
+            <span class="strong-w">Unity 6.3 LTS <span class="acid">/</span> PC first (Steam) <span class="acid">/</span> 120 FPS <span class="acid">/</span> full controller support</span>
+            &nbsp;&nbsp;<span class="acid">|</span>&nbsp;&nbsp;
+            Happy to talk alternate release strategies with publishing partners.
+        </p>
     </div>
-    <div class="file-number">FILE — 09 / 10</div>
+    <div class="idx"><b>08</b> / 09</div>
 </div>
 
-<!-- ═══════════════════════════════════ -->
-<!-- SLIDE 10: THANK YOU                -->
-<!-- ═══════════════════════════════════ -->
-<div class="slide">
-    <div class="corner-logo">
-        <img src="images/logos/LIG logo.png" alt="Lil Indie Games">
-    </div>
+<div class="slide wash-pop">
+    <div class="corner-logo"><img src="images/logos/LIG logo.png" alt="Lil Indie Games"></div>
     <div class="floating-character-wrapper">
         <img src="images/characters/character_4.png" alt="" class="floating-character">
-        <div class="tape" style="top: 12%; right: 6%; transform: rotate(6deg);">SEE YOU IN ORBIT</div>
     </div>
     <div class="slide-content">
-        <div class="folder-header">
-            <div class="folder-tab-divider"></div>
-            <div class="folder-tab tab-chaos">// LET'S TALK</div>
-            <div class="folder-tab-divider"></div>
-        </div>
-        <div class="case-file" style="position: relative; z-index: 3;">
-            <div style="max-width: 620px;">
-                <p style="font-family: 'Bebas Neue', sans-serif; font-size: 34px; line-height: 1.05; letter-spacing: 0.02em; color: var(--white); margin-bottom: 18px;">
-                    Built for couches. <span style="color: var(--pop);">Crafted for chaos.</span>
-                </p>
-                <div class="thankyou-big" style="margin-bottom: 20px;">
-                    THANK<br><span class="highlight">YOU.</span>
-                </div>
-                <p style="font-size: 18px; color: var(--gray); max-width: 520px; margin-bottom: 26px;">
-                    The build is playable today. Let's get it in your hands. We'll walk you through the game and answer anything. Grab your team and give it a go.
-                </p>
-
-                <!-- CTAs -->
-                <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 30px;">
-                    <a href="https://drive.google.com/file/d/1tngKsTi7OMFBkAlIlTAyaiW9Fc0KSDNm/view?usp=sharing" class="play-build-cta" target="_blank" style="font-size: 18px; padding: 12px 30px;">&#9654;&nbsp; Download the Build</a>
-                    <a href="mailto:admin@lilindiegames.com?subject=Party%20Ships%20%E2%80%94%20Live%20Demo" class="play-build-cta" style="font-size: 18px; padding: 12px 30px; background: transparent; color: var(--chaos); border: 2px solid var(--chaos);">&#9993;&nbsp; Schedule a Live Demo</a>
-                </div>
-
-                <!-- Contacts -->
-                <div style="display: flex; gap: 40px; flex-wrap: wrap; margin-bottom: 22px;">
-                    <div>
-                        <div style="font-size: 10px; letter-spacing: 0.2em; color: var(--gray); margin-bottom: 4px;">CO-FOUNDER / DEV</div>
-                        <div style="font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.03em; color: var(--white);">RAYNER BRANDON</div>
-                    </div>
-                    <div>
-                        <div style="font-size: 10px; letter-spacing: 0.2em; color: var(--gray); margin-bottom: 4px;">CO-FOUNDER / ART</div>
-                        <div style="font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.03em; color: var(--white);">JOSH BRANDON</div>
-                    </div>
-                </div>
-
-                <p style="font-size: 13px; color: var(--gray); letter-spacing: 0.1em;">
-                    <a href="mailto:admin@lilindiegames.com" style="color: var(--chaos); text-decoration: none; border-bottom: 1px solid var(--chaos);">admin@lilindiegames.com</a>
-                    &nbsp;&nbsp;|&nbsp;&nbsp;
-                    <a href="https://lilindiegames.com" style="color: var(--chaos); text-decoration: none; border-bottom: 1px solid var(--chaos);">lilindiegames.com</a>
-                </p>
-                <p style="font-size: 11px; color: var(--gray); margin-top: 10px; letter-spacing: 0.2em;">
-                    LIL INDIE GAMES &nbsp;·&nbsp; MELBOURNE, AUSTRALIA
-                </p>
+        <div class="kicker k-cyan"><span>LET'S TALK</span></div>
+        <div style="max-width: 640px;">
+            <p style="font-family: 'Bebas Neue', sans-serif; font-size: 36px; line-height: 1.05; letter-spacing: 0.02em; color: var(--ink); margin-bottom: 18px;">
+                Built for couches. <span class="hi">Loud on purpose.</span>
+            </p>
+            <div class="thankyou-big">
+                LET'S<br><span class="hi">PLAY.</span>
             </div>
+            <p class="lead" style="color: var(--gray); max-width: 540px; margin-bottom: 26px;">
+                The build is playable right now. Grab your mates, jump in, and we'll walk you through anything you want to see.
+            </p>
+
+            <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 30px;">
+                <a href="https://drive.google.com/file/d/1tngKsTi7OMFBkAlIlTAyaiW9Fc0KSDNm/view?usp=sharing" class="cta" target="_blank" style="font-size: 18px; padding: 12px 30px;"><span>&#9654;&nbsp; Download the Build</span></a>
+                <a href="mailto:admin@lilindiegames.com?subject=Party Ships live demo" class="cta cta-ghost" style="font-size: 18px; padding: 12px 30px;"><span>&#9993;&nbsp; Book a Live Demo</span></a>
+            </div>
+
+            <div style="display: flex; gap: 40px; flex-wrap: wrap; margin-bottom: 22px;">
+                <div>
+                    <div style="font-size: 10px; letter-spacing: 0.2em; color: var(--gray); margin-bottom: 4px;">CO-FOUNDER / DEV</div>
+                    <div style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.03em; color: var(--ink);">RAYNER BRANDON</div>
+                </div>
+                <div>
+                    <div style="font-size: 10px; letter-spacing: 0.2em; color: var(--gray); margin-bottom: 4px;">CO-FOUNDER / ART</div>
+                    <div style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.03em; color: var(--ink);">JOSH BRANDON</div>
+                </div>
+            </div>
+
+            <p style="font-size: 13px; color: var(--gray); letter-spacing: 0.1em;">
+                <a href="mailto:admin@lilindiegames.com" style="color: var(--cyan); text-decoration: none; border-bottom: 1px solid var(--cyan);">admin@lilindiegames.com</a>
+                &nbsp;&nbsp;<span class="acid">|</span>&nbsp;&nbsp;
+                <a href="https://lilindiegames.com" style="color: var(--cyan); text-decoration: none; border-bottom: 1px solid var(--cyan);">lilindiegames.com</a>
+            </p>
+            <p style="font-size: 11px; color: var(--gray); margin-top: 10px; letter-spacing: 0.2em;">
+                LIL INDIE GAMES &nbsp;<span class="acid">/</span>&nbsp; MELBOURNE, AUSTRALIA
+            </p>
         </div>
     </div>
-    <div class="file-number">FILE — 10 / 10</div>
+    <div class="idx"><b>09</b> / 09</div>
 </div>
 
 <script>
@@ -2459,7 +1283,7 @@
             return;
         }
 
-        // OUT phase — unified, no stagger
+        // OUT phase, unified, no stagger
         slots.forEach(function (s) {
             s.classList.remove('mod-in');
             s.style.animationDelay = '';
@@ -2469,7 +1293,7 @@
         comboList.classList.add('combo-out');
         playStyleLabel.classList.remove('label-in');
 
-        // IN phase — fire after out animation completes (220ms)
+        // IN phase, fire after out animation completes (220ms)
         setTimeout(function () {
             // swap content
             loadout.items.forEach(function (item, i) {
@@ -2486,7 +1310,7 @@
                 boxes[i].querySelector('.combo-desc').textContent  = combo.desc;
             });
 
-            // IN animations — unified, no stagger
+            // IN animations, unified, no stagger
             slots.forEach(function (s) {
                 s.classList.remove('mod-out');
                 s.classList.add('mod-in');
@@ -2522,5 +1346,6 @@
     }, CYCLE_MS);
 })();
 </script>
+
 </body>
 </html>
